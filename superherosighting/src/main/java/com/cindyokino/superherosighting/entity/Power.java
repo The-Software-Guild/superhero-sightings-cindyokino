@@ -7,13 +7,13 @@ import java.util.Objects;
  *
  * @author Cindy
  */
-public class Superpower {
+public class Power {
     private int id;
     private String name;
     private String description;
-    private List<Hero_Villain> powerUsers;
+    private List<Super> supers;
 
-    
+        
     public int getId() {
         return id;
     }
@@ -37,14 +37,23 @@ public class Superpower {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    public List<Super> getSupers() {
+        return supers;
+    }
+
+    public void setSupers(List<Super> supers) {
+        this.supers = supers;
+    }
 
     
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + this.id;
-        hash = 53 * hash + Objects.hashCode(this.name);
-        hash = 53 * hash + Objects.hashCode(this.description);
+        int hash = 5;
+        hash = 23 * hash + this.id;
+        hash = 23 * hash + Objects.hashCode(this.name);
+        hash = 23 * hash + Objects.hashCode(this.description);
+        hash = 23 * hash + Objects.hashCode(this.supers);
         return hash;
     }
 
@@ -59,7 +68,7 @@ public class Superpower {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Superpower other = (Superpower) obj;
+        final Power other = (Power) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -67,6 +76,9 @@ public class Superpower {
             return false;
         }
         if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.supers, other.supers)) {
             return false;
         }
         return true;

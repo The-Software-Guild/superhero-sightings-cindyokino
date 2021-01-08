@@ -7,12 +7,12 @@ import java.util.Objects;
  *
  * @author Cindy
  */
-public class Hero_Villain {
+public class Super {
     private int id;
     private String name;
     private String description;
     private List<Location> locations;
-    private List<Superpower> superpowers;
+    private List<Power> powers;
     private List<Organization> organizations;
 
     
@@ -48,12 +48,12 @@ public class Hero_Villain {
         this.locations = locations;
     }
 
-    public List<Superpower> getSuperpowers() {
-        return superpowers;
+    public List<Power> getPowers() {
+        return powers;
     }
 
-    public void setSuperpowers(List<Superpower> superpowers) {
-        this.superpowers = superpowers;
+    public void setPowers(List<Power> powers) {
+        this.powers = powers;
     }
 
     public List<Organization> getOrganizations() {
@@ -67,13 +67,13 @@ public class Hero_Villain {
     
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + this.id;
-        hash = 17 * hash + Objects.hashCode(this.name);
-        hash = 17 * hash + Objects.hashCode(this.description);
-        hash = 17 * hash + Objects.hashCode(this.locations);
-        hash = 17 * hash + Objects.hashCode(this.superpowers);
-        hash = 17 * hash + Objects.hashCode(this.organizations);
+        int hash = 5;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.description);
+        hash = 89 * hash + Objects.hashCode(this.locations);
+        hash = 89 * hash + Objects.hashCode(this.powers);
+        hash = 89 * hash + Objects.hashCode(this.organizations);
         return hash;
     }
 
@@ -88,7 +88,7 @@ public class Hero_Villain {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Hero_Villain other = (Hero_Villain) obj;
+        final Super other = (Super) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -101,7 +101,7 @@ public class Hero_Villain {
         if (!Objects.equals(this.locations, other.locations)) {
             return false;
         }
-        if (!Objects.equals(this.superpowers, other.superpowers)) {
+        if (!Objects.equals(this.powers, other.powers)) {
             return false;
         }
         if (!Objects.equals(this.organizations, other.organizations)) {
@@ -109,5 +109,5 @@ public class Hero_Villain {
         }
         return true;
     }
-    
+      
 }

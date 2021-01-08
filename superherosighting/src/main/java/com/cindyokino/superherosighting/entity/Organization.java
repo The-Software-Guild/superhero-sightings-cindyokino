@@ -13,7 +13,7 @@ public class Organization {
     private String description;
     private String address; 
     private String contact;
-    private List<Hero_Villain> members;
+    private List<Super> members;
 
     
     public int getId() {
@@ -56,11 +56,11 @@ public class Organization {
         this.contact = contact;
     }
 
-    public List<Hero_Villain> getMembers() {
+    public List<Super> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Hero_Villain> members) {
+    public void setMembers(List<Super> members) {
         this.members = members;
     }
 

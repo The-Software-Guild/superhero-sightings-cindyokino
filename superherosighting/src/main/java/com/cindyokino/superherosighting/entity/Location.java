@@ -14,7 +14,7 @@ public class Location {
     private String address; 
     private Double latitude;
     private Double longitude;
-    private List<Hero_Villain> heroes_villainsList;
+    private List<Super> supersList;
 
     
     public int getId() {
@@ -65,25 +65,25 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public List<Hero_Villain> getHeroes_villainsList() {
-        return heroes_villainsList;
+    public List<Super> getSupersList() {
+        return supersList;
     }
 
-    public void setHeroes_villainsList(List<Hero_Villain> heroes_villainsList) {
-        this.heroes_villainsList = heroes_villainsList;
+    public void setSupersList(List<Super> supersList) {
+        this.supersList = supersList;
     }
 
     
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + this.id;
-        hash = 53 * hash + Objects.hashCode(this.name);
-        hash = 53 * hash + Objects.hashCode(this.description);
-        hash = 53 * hash + Objects.hashCode(this.address);
-        hash = 53 * hash + Objects.hashCode(this.latitude);
-        hash = 53 * hash + Objects.hashCode(this.longitude);
-        hash = 53 * hash + Objects.hashCode(this.heroes_villainsList);
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.description);
+        hash = 97 * hash + Objects.hashCode(this.address);
+        hash = 97 * hash + Objects.hashCode(this.latitude);
+        hash = 97 * hash + Objects.hashCode(this.longitude);
+        hash = 97 * hash + Objects.hashCode(this.supersList);
         return hash;
     }
 
@@ -117,10 +117,10 @@ public class Location {
         if (!Objects.equals(this.longitude, other.longitude)) {
             return false;
         }
-        if (!Objects.equals(this.heroes_villainsList, other.heroes_villainsList)) {
+        if (!Objects.equals(this.supersList, other.supersList)) {
             return false;
         }
         return true;
     }
-    
+
 }

@@ -8,16 +8,16 @@ import java.util.Objects;
  * @author Cindy
  */
 public class Sighting {
-    private Hero_Villain hero_villain;
+    private Super hero_villain;
     private Location location;
     private LocalDate date;
 
     
-    public Hero_Villain getHero_villain() {
+    public Super getHero_villain() {
         return hero_villain;
     }
 
-    public void setHero_villain(Hero_Villain hero_villain) {
+    public void setHero_villain(Super hero_villain) {
         this.hero_villain = hero_villain;
     }
 
