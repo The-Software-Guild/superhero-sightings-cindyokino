@@ -1,5 +1,6 @@
 package com.cindyokino.superherosighting.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -10,6 +11,7 @@ public class Superpower {
     private int id;
     private String name;
     private String description;
+    private List<Hero_Villain> powerUsers;
 
     
     public int getId() {

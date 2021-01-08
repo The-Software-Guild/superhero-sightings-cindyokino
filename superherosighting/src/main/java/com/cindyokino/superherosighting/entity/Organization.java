@@ -1,5 +1,6 @@
 package com.cindyokino.superherosighting.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,6 +13,7 @@ public class Organization {
     private String description;
     private String address; 
     private String contact;
+    private List<Hero_Villain> members;
 
     
     public int getId() {
@@ -54,15 +56,24 @@ public class Organization {
         this.contact = contact;
     }
 
+    public List<Hero_Villain> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Hero_Villain> members) {
+        this.members = members;
+    }
+
     
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 97 * hash + this.id;
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.description);
-        hash = 97 * hash + Objects.hashCode(this.address);
-        hash = 97 * hash + Objects.hashCode(this.contact);
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.description);
+        hash = 89 * hash + Objects.hashCode(this.address);
+        hash = 89 * hash + Objects.hashCode(this.contact);
+        hash = 89 * hash + Objects.hashCode(this.members);
         return hash;
     }
 
@@ -91,6 +102,9 @@ public class Organization {
             return false;
         }
         if (!Objects.equals(this.contact, other.contact)) {
+            return false;
+        }
+        if (!Objects.equals(this.members, other.members)) {
             return false;
         }
         return true;

@@ -11,9 +11,9 @@ CREATE TABLE hero_villain(
     `description` VARCHAR(50)
 );
 
-CREATE TABLE sighting(
+CREATE TABLE location(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    location_name VARCHAR(20) NOT NULL,
+    `name` VARCHAR(20) NOT NULL,
     `description` VARCHAR(50),
     address VARCHAR(50) NOT NULL,
     latitude DECIMAL(10,8) NOT NULL,
@@ -35,13 +35,13 @@ CREATE TABLE `organization`(
 );
 
 -- ====================== BRIDGE TABLES ===========================
-CREATE TABLE hero_villain_sighting(
+CREATE TABLE sighting(
 	hero_villain_id INT NOT NULL,
-    sighting_id INT NOT NULL,
-    PRIMARY KEY pk_hero_villain_sighting (hero_villain_id, sighting_id),
+    location_id INT NOT NULL,
+    PRIMARY KEY pk_hero_villain_sighting (hero_villain_id, location_id),
     FOREIGN KEY (hero_villain_id) REFERENCES hero_villain(id),
-    FOREIGN KEY (sighting_id) REFERENCES sighting(id),
-    `date` TIMESTAMP NOT NULL
+    FOREIGN KEY (location_id) REFERENCES location(id),
+    `date` DATE NOT NULL
 );
 
 CREATE TABLE hero_villain_superpower(
