@@ -1,6 +1,5 @@
 package com.cindyokino.superherosighting.entity;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,7 +10,6 @@ public class Power {
     private int id;
     private String name;
     private String description;
-    private List<Super> supers;
 
         
     public int getId() {
@@ -37,23 +35,14 @@ public class Power {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    public List<Super> getSupers() {
-        return supers;
-    }
-
-    public void setSupers(List<Super> supers) {
-        this.supers = supers;
-    }
 
     
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + this.id;
-        hash = 23 * hash + Objects.hashCode(this.name);
-        hash = 23 * hash + Objects.hashCode(this.description);
-        hash = 23 * hash + Objects.hashCode(this.supers);
+        int hash = 3;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.description);
         return hash;
     }
 
@@ -76,9 +65,6 @@ public class Power {
             return false;
         }
         if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        if (!Objects.equals(this.supers, other.supers)) {
             return false;
         }
         return true;
