@@ -5,7 +5,7 @@ CREATE DATABASE heroSightingDbTest ;
 USE heroSightingDbTest ;
 
 -- ====================== MAIN TABLES ===========================
-CREATE TABLE hero_villain(
+CREATE TABLE `super`(
     id INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(20) NOT NULL,
     `description` VARCHAR(50)
@@ -20,7 +20,7 @@ CREATE TABLE location(
     longitude DECIMAL(11,8) NOT NULL
 );
 
-CREATE TABLE superpower(
+CREATE TABLE `power`(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(20) NOT NULL,
     `description` VARCHAR(50)    
@@ -36,27 +36,27 @@ CREATE TABLE `organization`(
 
 -- ====================== BRIDGE TABLES ===========================
 CREATE TABLE sighting(
-	hero_villain_id INT NOT NULL,
+	super_id INT NOT NULL,
     location_id INT NOT NULL,
-    PRIMARY KEY pk_hero_villain_sighting (hero_villain_id, location_id),
-    FOREIGN KEY (hero_villain_id) REFERENCES hero_villain(id),
+    PRIMARY KEY (super_id, location_id),
+    FOREIGN KEY (super_id) REFERENCES `super`(id),
     FOREIGN KEY (location_id) REFERENCES location(id),
     `date` DATE NOT NULL
 );
 
-CREATE TABLE hero_villain_superpower(
-	hero_villain_id INT NOT NULL,
-    superpower_id INT NOT NULL,
-    PRIMARY KEY pk_hero_villain_sighting (hero_villain_id, superpower_id),
-    FOREIGN KEY (hero_villain_id) REFERENCES hero_villain(id),
-    FOREIGN KEY (superpower_id) REFERENCES superpower(id)
+CREATE TABLE super_power(
+	super_id INT NOT NULL,
+    power_id INT NOT NULL,
+    PRIMARY KEY (super_id, power_id),
+    FOREIGN KEY (super_id) REFERENCES `super`(id),
+    FOREIGN KEY (power_id) REFERENCES `power`(id)
 );
 
-CREATE TABLE hero_villain_organization(
-	hero_villain_id INT NOT NULL,
+CREATE TABLE super_organization(
+	super_id INT NOT NULL,
     organization_id INT NOT NULL,
-    PRIMARY KEY pk_hero_villain_sighting (hero_villain_id, organization_id),
-    FOREIGN KEY (hero_villain_id) REFERENCES hero_villain(id),
+    PRIMARY KEY (super_id, organization_id),
+    FOREIGN KEY (super_id) REFERENCES `super`(id),
     FOREIGN KEY (organization_id) REFERENCES `organization`(id)
 );
 
