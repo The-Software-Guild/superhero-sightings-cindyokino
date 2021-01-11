@@ -52,12 +52,27 @@ public class SightingDaoDB implements SightingDao{
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         sighting.setId(newId);
         return sighting;
+    }
+
+    @Override
+    @Transactional
+    public Sighting addSighting(Sighting sighting) {
+        final String INSERT_SIGHTING = "INSERT INTO sighting(super_id, location_id, date) "
+                + "VALUES(?,?,?)";
+        jdbc.update(INSERT_SIGHTING,
+                sighting.getSuper_id(),
+                sighting.getLocation_id(),
+                sighting.getDate());
+        
+        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        sighting.setId(newId);
+        return sighting;
     }    
     
 
     @Override
     public void updateSighting(Sighting sighting) {
-        final String UPDATE_SIGHTING = "UPDATE sighting SET super_id = ?, locatioon_id = ?, date = ? "
+        final String UPDATE_SIGHTING = "UPDATE sighting SET super_id = ?, location_id = ?, date = ? "
                 + "WHERE id = ?";
         jdbc.update(UPDATE_SIGHTING, 
                 sighting.getSuper_id(), 
@@ -85,6 +100,7 @@ public class SightingDaoDB implements SightingDao{
         @Override
         public Sighting mapRow(ResultSet rs, int index) throws SQLException {
             Sighting sighting = new Sighting();
+            sighting.setId(rs.getInt("id"));
             sighting.setSuper_id(rs.getInt("super_id"));
             sighting.setLocation_id(rs.getInt("location_id"));
             sighting.setDate(rs.getDate("date").toLocalDate());
