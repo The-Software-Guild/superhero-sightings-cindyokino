@@ -5,7 +5,6 @@ import com.cindyokino.superherosighting.entity.Organization;
 import com.cindyokino.superherosighting.entity.Power;
 import com.cindyokino.superherosighting.entity.Sighting;
 import com.cindyokino.superherosighting.entity.Super;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
@@ -103,8 +102,6 @@ public class OrganizationDaoDBTest {
         organization.setAddress("Test Address");
         organization.setContact("Test Contact");
         organization = organizationDao.addOrganization(organization);
-        List<Organization> organizations = new ArrayList<>();
-        organizations.add(organization);
         
         Organization fromDao = organizationDao.getOrganizationById(organization.getId());
         
@@ -142,7 +139,7 @@ public class OrganizationDaoDBTest {
      */
     @Test
     public void testUpdateOrganization() {
-       Organization organization = new Organization();
+        Organization organization = new Organization();
         organization.setName("Test Name");
         organization.setDescription("Test Description");
         organization.setAddress("Test Address");
@@ -180,25 +177,23 @@ public class OrganizationDaoDBTest {
         super_villain.setName("Test Super Name");
         super_villain.setDescription("Test Super Description");        
         super_villain.setOrganizations(organizations); //add organizations list
-        super_villain = superDao.addSuper(super_villain); //save super 
-
-//        superDao.insertOrganization(super_villain); //Create a super_organization (link between super and organization)
+        superDao.addSuper(super_villain); //save super 
+        
+        Super savedSuper = superDao.getSuperById(super_villain.getId());
+        
+        assertEquals(savedSuper.getOrganizations().get(0).getId(), organization.getId());
         
         Organization organizationFromDao = organizationDao.getOrganizationById(organization.getId()); //get the saved organization from db
-        assertEquals(organization, organizationFromDao);
+        assertEquals(organization, organizationFromDao); //Assert that the organization created is the same as the organization get from the db
         
         organizationDao.deleteOrganizationById(organization.getId());
         
         organizationFromDao = organizationDao.getOrganizationById(organization.getId());
-        assertNull(organizationFromDao);
+        assertNull(organizationFromDao); //Assert that the organization was deleted
+        
+        Super superWithoutOrganization = superDao.getSuperById(super_villain.getId());
+        
+        assertEquals(superWithoutOrganization.getOrganizations().size(), 0); //Assert that this super doesn't have an organization        
     }
     
 } 
-        
-//        
-//        Power power = new Power();
-//        power.setName("Test Name");
-//        power.setDescription("Test Organization Description");
-//        power = powerDao.addPower(power);
-//        List<Power> powers = new ArrayList<>();
-//        powers.add(power);

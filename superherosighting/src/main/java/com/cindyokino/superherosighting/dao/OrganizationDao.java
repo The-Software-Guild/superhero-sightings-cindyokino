@@ -1,7 +1,6 @@
 package com.cindyokino.superherosighting.dao;
 
 import com.cindyokino.superherosighting.entity.Organization;
-import com.cindyokino.superherosighting.entity.Super;
 import java.util.List;
 
 /**

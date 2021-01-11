@@ -64,19 +64,8 @@ public class OrganizationDaoDB implements OrganizationDao{
         
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         organization.setId(newId);
-//        insertSuperOrganization(organization);
         return organization;
     }
-    
-//    private void insertSuperOrganization(Organization organization) {
-//        final String INSERT_SUPER_ORGANIZATION = "INSERT INTO "
-//                + "sighting(super_id, organization_id) VALUES(?,?)";
-//        for(Super super_villain : organization.getMembers()) {
-//            jdbc.update(INSERT_SUPER_ORGANIZATION, 
-//                    super_villain.getId(),
-//                    organization.getId());
-//        }
-//    }
     
 
     /** ********** updateOrganization. ********** **/
@@ -97,7 +86,6 @@ public class OrganizationDaoDB implements OrganizationDao{
         
         final String DELETE_SIGHTING = "DELETE FROM super_organization WHERE organization_id = ?";
         jdbc.update(DELETE_SIGHTING, organization.getId());
-//        insertSuperOrganization(organization);
     }
 
     
