@@ -182,10 +182,10 @@ public class LocationDaoDBTest {
         Super super_villain = new Super(); //Create a super
         super_villain.setName("Test Super Name");
         super_villain.setDescription("Test Super Description");        
-        super_villain.setLocations(locations);
-        super_villain = superDao.addSuper(super_villain);
+        super_villain.setLocations(locations); //add locations list
+        super_villain = superDao.addSuper(super_villain); //save super
         
-        Sighting sighting = new Sighting(); //Create a sighting table (link between super and location)
+        Sighting sighting = new Sighting(); //Create a sighting (link between super and location)
         sighting.setDate(LocalDate.now());
         sighting.setLocation_id(location.getId());
         sighting.setSuper_id(super_villain.getId());        
