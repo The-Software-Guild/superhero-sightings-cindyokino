@@ -14,7 +14,6 @@ public class Location {
     private String address; 
     private Double latitude;
     private Double longitude;
-    private List<Super> supersList;
 
     
     public int getId() {
@@ -65,14 +64,6 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public List<Super> getSupersList() {
-        return supersList;
-    }
-
-    public void setSupersList(List<Super> supersList) {
-        this.supersList = supersList;
-    }
-
     
     @Override
     public int hashCode() {
@@ -83,7 +74,6 @@ public class Location {
         hash = 97 * hash + Objects.hashCode(this.address);
         hash = 97 * hash + Objects.hashCode(this.latitude);
         hash = 97 * hash + Objects.hashCode(this.longitude);
-        hash = 97 * hash + Objects.hashCode(this.supersList);
         return hash;
     }
 
@@ -115,9 +105,6 @@ public class Location {
             return false;
         }
         if (!Objects.equals(this.longitude, other.longitude)) {
-            return false;
-        }
-        if (!Objects.equals(this.supersList, other.supersList)) {
             return false;
         }
         return true;
