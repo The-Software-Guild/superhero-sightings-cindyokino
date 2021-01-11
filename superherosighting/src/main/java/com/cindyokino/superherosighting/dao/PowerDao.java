@@ -8,9 +8,9 @@ import java.util.List;
  * @author Cindy
  */
 public interface PowerDao {
-    Power getSuperpowerById(int id);
-    List<Power> getAllSuperpowers();
-    Power addSuperpower(Power superpower);
-    void updateSuperpower(Power superpower);
-    void deleteSuperpowerById(int id);
+    Power getPowerowerById(int id);
+    List<Power> getAllPowers();
+    Power addPower(Power power);
+    void updatePower(Power power);
+    void deletePowerById(int id);
 }

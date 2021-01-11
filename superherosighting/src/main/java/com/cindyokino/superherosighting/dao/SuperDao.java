@@ -10,11 +10,11 @@ import java.util.List;
  * @author Cindy
  */
 public interface SuperDao {
-    Super getHeroVillainById(int id);
-    List<Super> getAllHeroVillains();
-    Super addHero_villain(Super hero_villain);
-    void updateHero_Villain(Super hero_villain);
-    void deleteHeroVillainById(int id);
+    Super getSuperById(int id);
+    List<Super> getAllSupers();
+    Super addSuper(Super hero_villain);
+    void updateSuper(Super hero_villain);
+    void deleteSuperById(int id);
     
     List<Super> getSupersByLocation(Location location);
     List<Super> getSupersByOrganization(Organization organization);
