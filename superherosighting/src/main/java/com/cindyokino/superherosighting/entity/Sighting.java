@@ -8,25 +8,34 @@ import java.util.Objects;
  * @author Cindy
  */
 public class Sighting {
-    private Super hero_villain;
-    private Location location;
+    private int id;
+    private int super_id;
+    private int location_id;
     private LocalDate date;
 
     
-    public Super getHero_villain() {
-        return hero_villain;
+    public int getId() {
+        return id;
     }
 
-    public void setHero_villain(Super hero_villain) {
-        this.hero_villain = hero_villain;
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public int getSuper_id() {
+        return super_id;
     }
 
-    public Location getLocation() {
-        return location;
+    public void setSuper_id(int super_id) {
+        this.super_id = super_id;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public int getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(int location_id) {
+        this.location_id = location_id;
     }
 
     public LocalDate getDate() {
@@ -40,9 +49,10 @@ public class Sighting {
     
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + Objects.hashCode(this.hero_villain);
-        hash = 59 * hash + Objects.hashCode(this.location);
+        int hash = 5;
+        hash = 59 * hash + this.id;
+        hash = 59 * hash + this.super_id;
+        hash = 59 * hash + this.location_id;
         hash = 59 * hash + Objects.hashCode(this.date);
         return hash;
     }
@@ -59,10 +69,13 @@ public class Sighting {
             return false;
         }
         final Sighting other = (Sighting) obj;
-        if (!Objects.equals(this.hero_villain, other.hero_villain)) {
+        if (this.id != other.id) {
             return false;
         }
-        if (!Objects.equals(this.location, other.location)) {
+        if (this.super_id != other.super_id) {
+            return false;
+        }
+        if (this.location_id != other.location_id) {
             return false;
         }
         if (!Objects.equals(this.date, other.date)) {
