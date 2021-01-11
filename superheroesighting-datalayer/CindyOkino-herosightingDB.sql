@@ -36,7 +36,8 @@ CREATE TABLE `organization`(
 
 -- ====================== BRIDGE TABLES ===========================
 CREATE TABLE sighting(
-	super_id INT NOT NULL,
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    super_id INT NOT NULL,
     location_id INT NOT NULL,
     PRIMARY KEY (super_id, location_id),
     FOREIGN KEY (super_id) REFERENCES `super`(id),
