@@ -1,7 +1,6 @@
 package com.cindyokino.superherosighting.dao;
 
 import com.cindyokino.superherosighting.entity.Organization;
-import com.cindyokino.superherosighting.entity.Super;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,7 +28,7 @@ public class OrganizationDaoDB implements OrganizationDao{
     @Override
     public Organization getOrganizationById(int id) {
         try {
-            final String SELECT_ORGANIZATION_BY_ID = "SELECT * FROM location WHERE id = ?";
+            final String SELECT_ORGANIZATION_BY_ID = "SELECT * FROM organization WHERE id = ?";
             return jdbc.queryForObject(SELECT_ORGANIZATION_BY_ID, new OrganizationDaoDB.OrganizationMapper(), id);
         } catch (DataAccessException ex) {
             return null;
@@ -56,9 +55,8 @@ public class OrganizationDaoDB implements OrganizationDao{
     @Override
     @Transactional
     public Organization addOrganization(Organization organization) {
-       final String INSERT_LOCATION = "INSERT INTO location(name, description, address, contact) "
-                + "VALUES(?,?,?,?)";
-        jdbc.update(INSERT_LOCATION,
+       final String INSERT_ORGANIZATION = "INSERT INTO organization(name, description, address, contact) VALUES(?,?,?,?)";
+        jdbc.update(INSERT_ORGANIZATION,
                 organization.getName(),
                 organization.getDescription(),
                 organization.getAddress(),
@@ -66,19 +64,19 @@ public class OrganizationDaoDB implements OrganizationDao{
         
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         organization.setId(newId);
-        insertSuperOrganization(organization);
+//        insertSuperOrganization(organization);
         return organization;
     }
     
-    private void insertSuperOrganization(Organization organization) {
-        final String INSERT_SUPER_ORGANIZATION = "INSERT INTO "
-                + "sighting(super_id, organization_id) VALUES(?,?)";
-        for(Super super_villain : organization.getMembers()) {
-            jdbc.update(INSERT_SUPER_ORGANIZATION, 
-                    super_villain.getId(),
-                    organization.getId());
-        }
-    }
+//    private void insertSuperOrganization(Organization organization) {
+//        final String INSERT_SUPER_ORGANIZATION = "INSERT INTO "
+//                + "sighting(super_id, organization_id) VALUES(?,?)";
+//        for(Super super_villain : organization.getMembers()) {
+//            jdbc.update(INSERT_SUPER_ORGANIZATION, 
+//                    super_villain.getId(),
+//                    organization.getId());
+//        }
+//    }
     
 
     /** ********** updateOrganization. ********** **/
@@ -87,10 +85,10 @@ public class OrganizationDaoDB implements OrganizationDao{
     //We need to handle the Organization by first deleting all the super_organization entries and then adding them back in with the call to insertSuperOrganization.
     @Override
     @Transactional
-    public void updateOrganization(Organization organization) {
-        final String UPDATE_LOCATION = "UPDATE location SET name = ?, description = ?, "
-                + "address = ?, contact = ?";
-        jdbc.update(UPDATE_LOCATION, 
+    public void updateOrganization(Organization organization) {        
+        final String UPDATE_ORGANIZATION = "UPDATE organization SET name = ?, description = ?, "
+                + "address = ?, contact = ? WHERE id = ?";
+        jdbc.update(UPDATE_ORGANIZATION, 
                 organization.getName(), 
                 organization.getDescription(),
                 organization.getAddress(),
@@ -99,7 +97,7 @@ public class OrganizationDaoDB implements OrganizationDao{
         
         final String DELETE_SIGHTING = "DELETE FROM super_organization WHERE organization_id = ?";
         jdbc.update(DELETE_SIGHTING, organization.getId());
-        insertSuperOrganization(organization);
+//        insertSuperOrganization(organization);
     }
 
     
@@ -115,13 +113,6 @@ public class OrganizationDaoDB implements OrganizationDao{
         
         final String DELETE_ORGANIZATION = "DELETE FROM organization WHERE id = ?";
         jdbc.update(DELETE_ORGANIZATION, id);
-    }
-
-    
-    /** ********** getOrganizationsBySuper. ********** **/
-    @Override
-    public List<Organization> getOrganizationsBySuper(Super hero_villain) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

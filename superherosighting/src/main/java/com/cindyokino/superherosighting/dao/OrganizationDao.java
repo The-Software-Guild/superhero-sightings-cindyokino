@@ -13,7 +13,5 @@ public interface OrganizationDao {
     List<Organization> getAllOrganizations();
     Organization addOrganization(Organization organization);
     void updateOrganization(Organization organization);
-    void deleteOrganizationById(int id);
-    
-    List<Organization> getOrganizationsBySuper(Super hero_villain);
+    void deleteOrganizationById(int id);    
 }
