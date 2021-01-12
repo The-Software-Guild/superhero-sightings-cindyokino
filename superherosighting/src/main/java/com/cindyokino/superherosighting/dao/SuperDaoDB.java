@@ -43,32 +43,35 @@ public class SuperDaoDB implements SuperDao{
     public Super getSuperById(int id) {
         try {
             final String SELECT_SUPER_BY_ID = "SELECT * FROM super WHERE id = ?";
-            Super hero_villain = jdbc.queryForObject(SELECT_SUPER_BY_ID, new SuperMapper(), id);
-            hero_villain.setLocations(getLocationsForSuper(id)); //set list of locations
-            hero_villain.setPowers(getPowersForSuper(id)); //set list of powers
-            hero_villain.setOrganizations(getOrganizationsForSuper(id)); //set list of organizations
-            return hero_villain;
+            Super heroVillain = jdbc.queryForObject(SELECT_SUPER_BY_ID, new SuperMapper(), id);
+            heroVillain.setLocations(getLocationsForSuper(id)); //set list of locations
+            heroVillain.setPowers(getPowersForSuper(id)); //set list of powers
+            heroVillain.setOrganizations(getOrganizationsForSuper(id)); //set list of organizations
+            return heroVillain;
         } catch(DataAccessException ex) {
             return null;
         }
     }
     
     //JOIN from Location to sighting to get a list of Location objects for this Super.
-    private List<Location> getLocationsForSuper(int id) {
+    @Override
+    public List<Location> getLocationsForSuper(int id) {
         final String SELECT_LOCATIONS_FOR_SUPER = "SELECT l.* FROM location l "
                 + "JOIN sighting si ON si.location_id = l.id WHERE si.super_id = ?";
         return jdbc.query(SELECT_LOCATIONS_FOR_SUPER, new LocationMapper(), id);
     } 
 
     //JOIN from Power to super_power to get a list of Power objects for this Super
-    private List<Power> getPowersForSuper(int id) {
+    @Override
+    public List<Power> getPowersForSuper(int id) {
         final String SELECT_POWERS_FOR_SUPER = "SELECT p.* FROM power p "
                 + "JOIN super_power sp ON sp.power_id = p.id WHERE sp.super_id = ?";
         return jdbc.query(SELECT_POWERS_FOR_SUPER, new PowerMapper(), id);    
     }
     
     //JOIN from Location to super_organization to get a list of Organization objects for this Super
-    private List<Organization> getOrganizationsForSuper(int id) {
+    @Override
+    public List<Organization> getOrganizationsForSuper(int id) {
         final String SELECT_ORGANIZATIONS_FOR_SUPER = "SELECT o.* FROM organization o "
                 + "JOIN super_organization so ON so.organization_id = o.id WHERE so.super_id = ?";
         return jdbc.query(SELECT_ORGANIZATIONS_FOR_SUPER, new OrganizationMapper(), id); 
@@ -87,10 +90,10 @@ public class SuperDaoDB implements SuperDao{
     }
     
     private void associatePowerOrganizationSighting(List<Super> supers ) {
-        for (Super hero_villain : supers) {
-            hero_villain.setPowers(getPowersForSuper(hero_villain.getId()));
-            hero_villain.setOrganizations(getOrganizationsForSuper(hero_villain.getId()));
-            hero_villain.setLocations(getLocationsForSuper(hero_villain.getId()));
+        for (Super heroVillain : supers) {
+            heroVillain.setPowers(getPowersForSuper(heroVillain.getId()));
+            heroVillain.setOrganizations(getOrganizationsForSuper(heroVillain.getId()));
+            heroVillain.setLocations(getLocationsForSuper(heroVillain.getId()));
         }
     }
 
@@ -105,50 +108,54 @@ public class SuperDaoDB implements SuperDao{
     //Once we've done that, we can return the Course from the method.
     @Override
     @Transactional
-    public Super addSuper(Super hero_villain) {
+    public Super addSuper(Super heroVillain) {
         final String INSERT_SUPER = "INSERT INTO super(name, description) "
                 + "VALUES(?,?)";
         jdbc.update(INSERT_SUPER,
-                hero_villain.getName(),
-                hero_villain.getDescription());
+                heroVillain.getName(),
+                heroVillain.getDescription());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        hero_villain.setId(newId);
-        insertSighting(hero_villain);
-        insertPower(hero_villain);
-        insertOrganization(hero_villain);
-        return hero_villain;
+        heroVillain.setId(newId);
+
+        if(heroVillain.getPowers() != null && !heroVillain.getPowers().isEmpty()) {        
+            insertPower(heroVillain);
+        }
+        if(heroVillain.getOrganizations() != null && !heroVillain.getOrganizations().isEmpty()) {
+            insertOrganization(heroVillain);
+        }
+        return heroVillain;
     }  
     
     //Loops through the list of Locations in the Super and adds database entries to sighting for each
-    private void insertSighting(Super super_villain) {
+    public void insertSighting(Super heroVillain) {
         final String INSERT_SIGHTING = "INSERT INTO "
                 + "sighting(super_id, location_id) VALUES(?,?)";
-        for(Location location : super_villain.getLocations()) {
+        for(Location location : heroVillain.getLocations()) {
             jdbc.update(INSERT_SIGHTING, 
-                    super_villain.getId(),
+                    heroVillain.getId(),
                     location.getId());
         }
     }
     
     //Loops through the list of Powers in the Super and adds database entries to super_power for each.
-    private void insertPower(Super super_villain) {
+    public void insertPower(Super heroVillain) {
         final String INSERT_POWER = "INSERT INTO "
                 + "super_power(super_id, power_id) VALUES(?,?)";
-        for(Power power : super_villain.getPowers()) {
+        for(Power power : heroVillain.getPowers()) {
             jdbc.update(INSERT_POWER, 
-                    super_villain.getId(),
+                    heroVillain.getId(),
                     power.getId());
         }
     }
     
     //Loops through the list of Organizations in the Super and adds database entries to super_organization for each.
-    private void insertOrganization(Super super_villain) {
+    public void insertOrganization(Super heroVillain) {
         final String INSERT_ORGANIZATION = "INSERT INTO "
                 + "super_organization(super_id, organization_id) VALUES(?,?)";
-        for(Organization organization : super_villain.getOrganizations()) {
+        for(Organization organization : heroVillain.getOrganizations()) {
             jdbc.update(INSERT_ORGANIZATION, 
-                    super_villain.getId(),
+                    heroVillain.getId(),
                     organization.getId());
         }
     }
@@ -162,24 +169,24 @@ public class SuperDaoDB implements SuperDao{
     //We need to handle the Organizations by first deleting all the super_organization entries and then adding them back in with the call to insertOrganization.
     @Override
     @Transactional
-    public void updateSuper(Super hero_villain) {
+    public void updateSuper(Super heroVillain) {
         final String UPDATE_SUPER = "UPDATE super SET name = ?, description = ? WHERE id = ?";
         jdbc.update(UPDATE_SUPER, 
-                hero_villain.getName(), 
-                hero_villain.getDescription(), 
-                hero_villain.getId());
+                heroVillain.getName(), 
+                heroVillain.getDescription(), 
+                heroVillain.getId());
         
         final String DELETE_SIGHTING = "DELETE FROM sighting WHERE super_id = ?";
-        jdbc.update(DELETE_SIGHTING, hero_villain.getId());        
-        insertOrganization(hero_villain);
+        jdbc.update(DELETE_SIGHTING, heroVillain.getId());        
+        insertSighting(heroVillain);
         
         final String DELETE_SUPER_POWER = "DELETE FROM sighting WHERE super_id = ?";
-        jdbc.update(DELETE_SUPER_POWER, hero_villain.getId());
-        insertPower(hero_villain);
+        jdbc.update(DELETE_SUPER_POWER, heroVillain.getId());
+        insertPower(heroVillain);
         
         final String DELETE_SUPER_ORGANIZATION = "DELETE FROM sighting WHERE super_id = ?";
-        jdbc.update(DELETE_SUPER_ORGANIZATION, hero_villain.getId());
-        insertSighting(hero_villain);
+        jdbc.update(DELETE_SUPER_ORGANIZATION, heroVillain.getId());        
+        insertOrganization(heroVillain);
     }
 
     
@@ -226,7 +233,7 @@ public class SuperDaoDB implements SuperDao{
     @Override
     public List<Super> getSupersByOrganization(Organization organization) {
         final String SELECT_SUPERS_FOR_LOCATION = "SELECT s.* FROM super s JOIN "
-                + "super_organization so ON so.super_id = s.id WHERE so.orgaization_id = ?";
+                + "super_organization so ON so.super_id = s.id WHERE so.organization_id = ?";
         List<Super> supers = jdbc.query(SELECT_SUPERS_FOR_LOCATION, 
                 new SuperMapper(), organization.getId());
         associatePowerOrganizationSighting(supers);
@@ -238,11 +245,12 @@ public class SuperDaoDB implements SuperDao{
 
         @Override
         public Super mapRow(ResultSet rs, int index) throws SQLException {
-            Super hero_villain = new Super();
-            hero_villain.setId(rs.getInt("id"));
-            hero_villain.setName(rs.getString("name"));
-            hero_villain.setDescription(rs.getString("description"));            
-            return hero_villain;
+            Super heroVillain = new Super();
+            heroVillain.setId(rs.getInt("id"));
+            heroVillain.setName(rs.getString("name"));
+            heroVillain.setDescription(rs.getString("description"));   
+        
+            return heroVillain;
         }
     }
     
