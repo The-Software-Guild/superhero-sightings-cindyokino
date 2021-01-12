@@ -28,6 +28,6 @@ public interface SuperDao {
     void insertPower(Super heroVillain);
     void insertOrganization(Super heroVillain);
     
-    void removePowerForSuper(Super heroVillain);
-    void removeOrganizationForSuper(Super heroVillain);
+    void removePowerForSuper(int superId, int powerId);
+    void removeOrganizationForSuper(int superId, int organizationId);
 }

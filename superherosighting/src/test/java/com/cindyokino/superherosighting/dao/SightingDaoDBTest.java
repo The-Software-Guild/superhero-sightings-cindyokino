@@ -1,8 +1,6 @@
 package com.cindyokino.superherosighting.dao;
 
 import com.cindyokino.superherosighting.entity.Location;
-import com.cindyokino.superherosighting.entity.Organization;
-import com.cindyokino.superherosighting.entity.Power;
 import com.cindyokino.superherosighting.entity.Sighting;
 import com.cindyokino.superherosighting.entity.Super;
 import java.time.LocalDate;

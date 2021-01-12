@@ -456,4 +456,66 @@ public class SuperDaoDBTest {
         assertTrue(supersByOrganizationFromDao.contains(heroVillain2));
     }
     
+    /**
+     * Test of removePowerForSuper method, of class SuperDaoDB.
+     */
+    @Test
+    public void testRemovePowerForSuper() {
+        Power power = new Power(); //Create a power
+        power.setName("Test Name");
+        power.setDescription("Test Description");
+        power = powerDao.addPower(power); //save power
+        List<Power> powers = new ArrayList<>();
+        powers.add(power);
+
+        Super heroVillain = new Super(); //Create a super
+        heroVillain.setName("Test Super Name");
+        heroVillain.setDescription("Test Super Description");        
+        heroVillain.setPowers(powers); //add powers list to super
+        superDao.addSuper(heroVillain); //save super  
+        
+        Super savedSuper = superDao.getSuperById(heroVillain.getId());
+        assertEquals(savedSuper.getPowers().size(), 1); //There is 1 power in the list
+        
+        superDao.removePowerForSuper(heroVillain.getId(), power.getId()); //Call function to delete link between super and power
+        
+        savedSuper = superDao.getSuperById(heroVillain.getId());
+        assertEquals(savedSuper.getPowers().size(), 0); //There is no power in the list, the link was deleted
+    
+        Power savedPower = powerDao.getPowerowerById(power.getId());
+        assertEquals(power, savedPower); //Assert that the power still exists
+    }
+
+    /**
+     * Test of removeOrganizationForSuper method, of class SuperDaoDB.
+     */
+    @Test
+    public void testRemoveOrganizationForSuper() {
+        Organization organization = new Organization(); //Create organization
+        organization.setName("Test Name");
+        organization.setDescription("Test Description");
+        organization.setAddress("Test Address");
+        organization.setContact("Test Contact");
+        organization = organizationDao.addOrganization(organization); //save organization
+        List<Organization> organizations = new ArrayList<>();
+        organizations.add(organization);
+
+        Super heroVillain = new Super(); //Create a super
+        heroVillain.setName("Test Super Name");
+        heroVillain.setDescription("Test Super Description");        
+        heroVillain.setOrganizations(organizations); //add organizations list to super
+        superDao.addSuper(heroVillain); //save super  
+        
+        Super savedSuper = superDao.getSuperById(heroVillain.getId());
+        assertEquals(savedSuper.getOrganizations().size(), 1); //There is 1 organization in the list 
+    
+        superDao.removeOrganizationForSuper(heroVillain.getId(), organization.getId()); //Call function to delete link between super and organization
+        
+        savedSuper = superDao.getSuperById(heroVillain.getId());
+        assertEquals(savedSuper.getOrganizations().size(), 0); //There is no organization in the list, the link was deleted
+    
+        Organization savedOrganization = organizationDao.getOrganizationById(organization.getId());
+        assertEquals(organization, savedOrganization); //Assert that the organization still exists
+    }
 }
+

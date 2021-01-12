@@ -76,7 +76,6 @@ public class SuperDaoDB implements SuperDao{
                 + "JOIN super_organization so ON so.organization_id = o.id WHERE so.super_id = ?";
         return jdbc.query(SELECT_ORGANIZATIONS_FOR_SUPER, new OrganizationMapper(), id); 
     }
-
     
     /** ********** getAllSupers. ********** **/
     //We start by writing a SELECT query and using it to get the list of Supers.
@@ -244,18 +243,18 @@ public class SuperDaoDB implements SuperDao{
     /** ********** removePowerForSuper. ********** **/
     // Remove the link between a super and a power
     @Override
-    public void removePowerForSuper(Super heroVillain) {
-        final String DELETE_SIGHTING = "DELETE FROM super_power WHERE super_id = ?";
-        jdbc.update(DELETE_SIGHTING, heroVillain.getId());    
+    public void removePowerForSuper(int superId, int powerId) {
+        final String DELETE_POWER_FOR_SUPER = "DELETE FROM super_power WHERE super_id = ? AND power_id = ?";
+        jdbc.update(DELETE_POWER_FOR_SUPER, superId, powerId);
     }
-
+    
     
     /** ********** removeOrganizationForSuper. ********** **/
     // Remove the link between a super and an organization
     @Override
-    public void removeOrganizationForSuper(Super heroVillain) {
-        final String DELETE_SIGHTING = "DELETE FROM super_organization WHERE super_id = ?";
-        jdbc.update(DELETE_SIGHTING, heroVillain.getId());
+    public void removeOrganizationForSuper(int superId, int organizationId) {
+        final String DELETE_ORGANIZATION_FOR_SUPER = "DELETE FROM super_organization WHERE super_id = ? AND organization_id = ?";
+        jdbc.update(DELETE_ORGANIZATION_FOR_SUPER, superId, organizationId);
     }
     
     
