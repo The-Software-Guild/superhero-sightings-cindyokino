@@ -27,4 +27,7 @@ public interface SuperDao {
     void insertSighting(Super heroVillain);
     void insertPower(Super heroVillain);
     void insertOrganization(Super heroVillain);
+    
+    void removePowerForSuper(Super heroVillain);
+    void removeOrganizationForSuper(Super heroVillain);
 }

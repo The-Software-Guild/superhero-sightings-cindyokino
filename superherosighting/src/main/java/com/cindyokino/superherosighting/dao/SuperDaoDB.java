@@ -239,6 +239,24 @@ public class SuperDaoDB implements SuperDao{
         associatePowerOrganizationSighting(supers);
         return supers;
     }
+
+    
+    /** ********** removePowerForSuper. ********** **/
+    // Remove the link between a super and a power
+    @Override
+    public void removePowerForSuper(Super heroVillain) {
+        final String DELETE_SIGHTING = "DELETE FROM super_power WHERE super_id = ?";
+        jdbc.update(DELETE_SIGHTING, heroVillain.getId());    
+    }
+
+    
+    /** ********** removeOrganizationForSuper. ********** **/
+    // Remove the link between a super and an organization
+    @Override
+    public void removeOrganizationForSuper(Super heroVillain) {
+        final String DELETE_SIGHTING = "DELETE FROM super_organization WHERE super_id = ?";
+        jdbc.update(DELETE_SIGHTING, heroVillain.getId());
+    }
     
     
     public static final class SuperMapper implements RowMapper<Super> {
