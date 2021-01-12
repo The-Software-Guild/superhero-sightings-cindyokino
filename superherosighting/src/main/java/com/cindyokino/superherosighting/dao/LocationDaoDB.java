@@ -85,9 +85,6 @@ public class LocationDaoDB implements LocationDao{
                 location.getLatitude(),
                 location.getLongitude(),
                 location.getId());
-        
-        final String DELETE_SIGHTING = "DELETE FROM sighting WHERE location_id = ?";
-        jdbc.update(DELETE_SIGHTING, location.getId());
     }
 
     

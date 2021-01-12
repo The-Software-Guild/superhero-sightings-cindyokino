@@ -1,9 +1,6 @@
 package com.cindyokino.superherosighting.dao;
 
-import com.cindyokino.superherosighting.entity.Location;
-import com.cindyokino.superherosighting.entity.Organization;
 import com.cindyokino.superherosighting.entity.Power;
-import com.cindyokino.superherosighting.entity.Sighting;
 import com.cindyokino.superherosighting.entity.Super;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,17 +25,8 @@ public class PowerDaoDBTest {
     
     //Autowire in the DAO classes:
     @Autowired
-    LocationDao locationDao;
-    
-    @Autowired
-    OrganizationDao organizationDao;
-    
-    @Autowired
     PowerDao powerDao;
     
-    @Autowired
-    SightingDao sightingDao;
-            
     @Autowired
     SuperDao superDao;
     
@@ -56,24 +44,9 @@ public class PowerDaoDBTest {
     
     @Before
     public void setUp() {
-        List<Location> locations = locationDao.getAllLocations();
-        for(Location location : locations) {
-            locationDao.deleteLocationById(location.getId());
-        }
-        
-        List<Organization> organizations = organizationDao.getAllOrganizations();
-        for(Organization organization : organizations) {
-            organizationDao.deleteOrganizationById(organization.getId());
-        }
-        
         List<Power> powers = powerDao.getAllPowers();
         for(Power power : powers) {
             powerDao.deletePowerById(power.getId());
-        }
-        
-        List<Sighting> sightings = sightingDao.getAllSightings();
-        for(Sighting sighting : sightings) {
-            sightingDao.deleteSightingById(sighting.getId());
         }
         
         List<Super> supers = superDao.getAllSupers();
@@ -160,13 +133,13 @@ public class PowerDaoDBTest {
         List<Power> powers = new ArrayList<>();
         powers.add(power);
 
-        Super super_villain = new Super(); //Create a super
-        super_villain.setName("Test Super Name");
-        super_villain.setDescription("Test Super Description");        
-        super_villain.setPowers(powers); //add powers list to super
-        superDao.addSuper(super_villain); //save super 
+        Super heroVillain = new Super(); //Create a super
+        heroVillain.setName("Test Super Name");
+        heroVillain.setDescription("Test Super Description");        
+        heroVillain.setPowers(powers); //add powers list to super
+        superDao.addSuper(heroVillain); //save super 
         
-        Super savedSuper = superDao.getSuperById(super_villain.getId());
+        Super savedSuper = superDao.getSuperById(heroVillain.getId());
         
         assertEquals(savedSuper.getPowers().get(0).getId(), power.getId()); //Assert that the power on the savedSuper's powers list is the power we created
         
@@ -178,7 +151,7 @@ public class PowerDaoDBTest {
         powerFromDao = powerDao.getPowerowerById(power.getId());
         assertNull(powerFromDao); //Assert that the power was deleted
         
-        Super superWithoutPower = superDao.getSuperById(super_villain.getId());
+        Super superWithoutPower = superDao.getSuperById(heroVillain.getId());
         
         assertEquals(superWithoutPower.getPowers().size(), 0); //Assert that this super doesn't have a power on it's powers list
     }

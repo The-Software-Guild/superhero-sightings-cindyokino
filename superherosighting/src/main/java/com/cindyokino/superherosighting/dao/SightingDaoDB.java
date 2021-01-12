@@ -45,8 +45,8 @@ public class SightingDaoDB implements SightingDao{
         final String INSERT_SIGHTING = "INSERT INTO sighting(super_id, location_id, date) "
                 + "VALUES(?,?,?)";
         jdbc.update(INSERT_SIGHTING,
-                sighting.getSuper_id(),
-                sighting.getLocation_id(),
+                sighting.getSuperId(),
+                sighting.getLocationId(),
                 date);
         
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -60,8 +60,8 @@ public class SightingDaoDB implements SightingDao{
         final String INSERT_SIGHTING = "INSERT INTO sighting(super_id, location_id, date) "
                 + "VALUES(?,?,?)";
         jdbc.update(INSERT_SIGHTING,
-                sighting.getSuper_id(),
-                sighting.getLocation_id(),
+                sighting.getSuperId(),
+                sighting.getLocationId(),
                 sighting.getDate());
         
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -75,8 +75,8 @@ public class SightingDaoDB implements SightingDao{
         final String UPDATE_SIGHTING = "UPDATE sighting SET super_id = ?, location_id = ?, date = ? "
                 + "WHERE id = ?";
         jdbc.update(UPDATE_SIGHTING, 
-                sighting.getSuper_id(), 
-                sighting.getLocation_id(),
+                sighting.getSuperId(), 
+                sighting.getLocationId(),
                 sighting.getDate(),
                 sighting.getId());  
     }
@@ -101,8 +101,8 @@ public class SightingDaoDB implements SightingDao{
         public Sighting mapRow(ResultSet rs, int index) throws SQLException {
             Sighting sighting = new Sighting();
             sighting.setId(rs.getInt("id"));
-            sighting.setSuper_id(rs.getInt("super_id"));
-            sighting.setLocation_id(rs.getInt("location_id"));
+            sighting.setSuperId(rs.getInt("super_id"));
+            sighting.setLocationId(rs.getInt("location_id"));
             sighting.setDate(rs.getDate("date").toLocalDate());
             return sighting;
         }

@@ -9,11 +9,10 @@ import java.util.Objects;
  */
 public class Sighting {
     private int id;
-    private int super_id;
-    private int location_id;
+    private int superId;
+    private int locationId;
     private LocalDate date;
 
-    
     public int getId() {
         return id;
     }
@@ -21,21 +20,21 @@ public class Sighting {
     public void setId(int id) {
         this.id = id;
     }
-    
-    public int getSuper_id() {
-        return super_id;
+
+    public int getSuperId() {
+        return superId;
     }
 
-    public void setSuper_id(int super_id) {
-        this.super_id = super_id;
+    public void setSuperId(int superId) {
+        this.superId = superId;
     }
 
-    public int getLocation_id() {
-        return location_id;
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setLocation_id(int location_id) {
-        this.location_id = location_id;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
     public LocalDate getDate() {
@@ -46,14 +45,13 @@ public class Sighting {
         this.date = date;
     }
 
-    
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + this.id;
-        hash = 59 * hash + this.super_id;
-        hash = 59 * hash + this.location_id;
-        hash = 59 * hash + Objects.hashCode(this.date);
+        int hash = 3;
+        hash = 29 * hash + this.id;
+        hash = 29 * hash + this.superId;
+        hash = 29 * hash + this.locationId;
+        hash = 29 * hash + Objects.hashCode(this.date);
         return hash;
     }
 
@@ -72,10 +70,10 @@ public class Sighting {
         if (this.id != other.id) {
             return false;
         }
-        if (this.super_id != other.super_id) {
+        if (this.superId != other.superId) {
             return false;
         }
-        if (this.location_id != other.location_id) {
+        if (this.locationId != other.locationId) {
             return false;
         }
         if (!Objects.equals(this.date, other.date)) {

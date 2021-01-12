@@ -1,6 +1,5 @@
 package com.cindyokino.superherosighting.entity;
 
-import java.util.List;
 import java.util.Objects;
 
 /**

@@ -35,12 +35,6 @@ public class SightingDaoDBTest {
     LocationDao locationDao;
     
     @Autowired
-    OrganizationDao organizationDao;
-    
-    @Autowired
-    PowerDao powerDao;
-    
-    @Autowired
     SightingDao sightingDao;
             
     @Autowired
@@ -64,24 +58,14 @@ public class SightingDaoDBTest {
             locationDao.deleteLocationById(location.getId());
         }
         
-        List<Organization> organizations = organizationDao.getAllOrganizations();
-        for(Organization organization : organizations) {
-            organizationDao.deleteOrganizationById(organization.getId());
-        }
-        
-        List<Power> powers = powerDao.getAllPowers();
-        for(Power power : powers) {
-            powerDao.deletePowerById(power.getId());
-        }
-        
         List<Sighting> sightings = sightingDao.getAllSightings();
         for(Sighting sighting : sightings) {
             sightingDao.deleteSightingById(sighting.getId());
         }
         
         List<Super> supers = superDao.getAllSupers();
-        for(Super hero_villain : supers) {
-            superDao.deleteSuperById(hero_villain.getId());
+        for(Super heroVillain : supers) {
+            superDao.deleteSuperById(heroVillain.getId());
         }
     }
     
@@ -106,16 +90,16 @@ public class SightingDaoDBTest {
         List<Location> locations = new ArrayList<>();
         locations.add(location);
 
-        Super super_villain = new Super(); //Create a super
-        super_villain.setName("Test Super Name");
-        super_villain.setDescription("Test Super Description");        
-        super_villain.setLocations(locations); //add locations list
-        super_villain = superDao.addSuper(super_villain); //save super 
+        Super heroVillain = new Super(); //Create a super
+        heroVillain.setName("Test Super Name");
+        heroVillain.setDescription("Test Super Description");        
+        heroVillain.setLocations(locations); //add locations list
+        heroVillain = superDao.addSuper(heroVillain); //save super 
         
         Sighting sighting = new Sighting(); //Create a sighting
         sighting.setDate(LocalDate.now());
-        sighting.setLocation_id(location.getId());
-        sighting.setSuper_id(super_villain.getId());        
+        sighting.setLocationId(location.getId());
+        sighting.setSuperId(heroVillain.getId());        
         sighting = sightingDao.addSighting(sighting); 
         
         Sighting sightingFromDao = sightingDao.getSightingById(sighting.getId()); //get the saved sighting from db
@@ -137,22 +121,22 @@ public class SightingDaoDBTest {
         List<Location> locations = new ArrayList<>();
         locations.add(location);
 
-        Super super_villain = new Super(); //Create a super
-        super_villain.setName("Test Super Name");
-        super_villain.setDescription("Test Super Description");        
-        super_villain.setLocations(locations); //add locations list
-        super_villain = superDao.addSuper(super_villain); //save super 
+        Super heroVillain = new Super(); //Create a super
+        heroVillain.setName("Test Super Name");
+        heroVillain.setDescription("Test Super Description");        
+        heroVillain.setLocations(locations); //add locations list
+        heroVillain = superDao.addSuper(heroVillain); //save super 
         
         Sighting sighting1 = new Sighting(); //Create sighting1
         sighting1.setDate(LocalDate.now().minusDays(1)); //Set date to yesterday
-        sighting1.setLocation_id(location.getId());
-        sighting1.setSuper_id(super_villain.getId());        
+        sighting1.setLocationId(location.getId());
+        sighting1.setSuperId(heroVillain.getId());        
         sighting1 = sightingDao.addSighting(sighting1); 
         
         Sighting sighting2 = new Sighting(); //Create sighting2
         sighting2.setDate(LocalDate.now());
-        sighting2.setLocation_id(location.getId());
-        sighting2.setSuper_id(super_villain.getId());        
+        sighting2.setLocationId(location.getId());
+        sighting2.setSuperId(heroVillain.getId());        
         sighting2 = sightingDao.addSighting(sighting2);
         
         List<Sighting> sightings = sightingDao.getAllSightings();
@@ -177,16 +161,16 @@ public class SightingDaoDBTest {
         List<Location> locations = new ArrayList<>();
         locations.add(location);
 
-        Super super_villain = new Super(); //Create a super
-        super_villain.setName("Test Super Name");
-        super_villain.setDescription("Test Super Description");        
-        super_villain.setLocations(locations); //add locations list
-        super_villain = superDao.addSuper(super_villain); //save super 
+        Super heroVillain = new Super(); //Create a super
+        heroVillain.setName("Test Super Name");
+        heroVillain.setDescription("Test Super Description");        
+        heroVillain.setLocations(locations); //add locations list
+        heroVillain = superDao.addSuper(heroVillain); //save super 
         
         Sighting sighting = new Sighting(); //Create a sighting
         sighting.setDate(LocalDate.now());
-        sighting.setLocation_id(location.getId());
-        sighting.setSuper_id(super_villain.getId());        
+        sighting.setLocationId(location.getId());
+        sighting.setSuperId(heroVillain.getId());        
         sighting = sightingDao.addSighting(sighting); 
         
         Sighting sightingFromDao = sightingDao.getSightingById(sighting.getId());
@@ -216,19 +200,19 @@ public class SightingDaoDBTest {
         List<Location> locations = new ArrayList<>();
         locations.add(location);
 
-        Super super_villain = new Super(); //Create a super
-        super_villain.setName("Test Super Name");
-        super_villain.setDescription("Test Super Description");        
-        super_villain.setLocations(locations); //add locations list
-        super_villain = superDao.addSuper(super_villain); //save super 
+        Super heroVillain = new Super(); //Create a super
+        heroVillain.setName("Test Super Name");
+        heroVillain.setDescription("Test Super Description");        
+        heroVillain.setLocations(locations); //add locations list
+        heroVillain = superDao.addSuper(heroVillain); //save super 
         
         Sighting sighting = new Sighting(); //Create a sighting
         sighting.setDate(LocalDate.now());
-        sighting.setLocation_id(location.getId());
-        sighting.setSuper_id(super_villain.getId());        
+        sighting.setLocationId(location.getId());
+        sighting.setSuperId(heroVillain.getId());        
         sighting = sightingDao.addSighting(sighting);
         
-        Super savedSuper = superDao.getSuperById(super_villain.getId());        
+        Super savedSuper = superDao.getSuperById(heroVillain.getId());        
         assertEquals(savedSuper.getLocations().get(0).getId(), location.getId()); //Assert that the location on the savedSuper's locations list is the power we created
        
         Sighting savedSighting = sightingDao.getSightingById(sighting.getId());
@@ -241,7 +225,7 @@ public class SightingDaoDBTest {
         sightingFromDao = sightingDao.getSightingById(sighting.getId());
         assertNull(sightingFromDao); //Assert that the sighting was deleted
         
-        Super superWithoutPower = superDao.getSuperById(super_villain.getId());        
+        Super superWithoutPower = superDao.getSuperById(heroVillain.getId());        
         assertEquals(superWithoutPower.getLocations().size(), 0); //Assert that this super doesn't have a location on it's locations list
     
     }

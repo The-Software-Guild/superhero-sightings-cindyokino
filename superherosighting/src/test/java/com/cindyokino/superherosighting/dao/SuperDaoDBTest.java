@@ -132,8 +132,8 @@ public class SuperDaoDBTest {
         
         Sighting sighting = new Sighting(); //Create a sighting
         sighting.setDate(LocalDate.now());
-        sighting.setLocation_id(location.getId());
-        sighting.setSuper_id(heroVillain.getId());        
+        sighting.setLocationId(location.getId());
+        sighting.setSuperId(heroVillain.getId());        
         sightingDao.addSighting(sighting); //save sighting
         
         Super heroVillainFromDao = superDao.getSuperById(heroVillain.getId()); //get the saved super from db
@@ -173,14 +173,14 @@ public class SuperDaoDBTest {
         
         Sighting sighting = new Sighting(); //Create sighting
         sighting.setDate(LocalDate.now());
-        sighting.setLocation_id(location.getId());
-        sighting.setSuper_id(heroVillain.getId());        
+        sighting.setLocationId(location.getId());
+        sighting.setSuperId(heroVillain.getId());        
         sightingDao.addSighting(sighting); //save sighting
         
         Sighting sighting2 = new Sighting(); //Create sighting2
         sighting2.setDate(LocalDate.now());
-        sighting2.setLocation_id(location2.getId());
-        sighting2.setSuper_id(heroVillain.getId());        
+        sighting2.setLocationId(location2.getId());
+        sighting2.setSuperId(heroVillain.getId());        
         sightingDao.addSighting(sighting2); //save sighting2
         
         List<Location> locationsForSuperFromDao = superDao.getLocationsForSuper(heroVillain.getId()); //get the locations for super from db
@@ -355,8 +355,8 @@ public class SuperDaoDBTest {
         
         Sighting sighting = new Sighting(); //Create a sighting
         sighting.setDate(LocalDate.now());
-        sighting.setLocation_id(location.getId());
-        sighting.setSuper_id(heroVillain.getId());        
+        sighting.setLocationId(location.getId());
+        sighting.setSuperId(heroVillain.getId());        
         sightingDao.addSighting(sighting); //save sighting               
         
         Super savedSuper = superDao.getSuperById(heroVillain.getId()); //get the saved super from db
@@ -402,14 +402,14 @@ public class SuperDaoDBTest {
         
         Sighting sighting = new Sighting(); //Create sighting
         sighting.setDate(LocalDate.now());
-        sighting.setLocation_id(location.getId());
-        sighting.setSuper_id(heroVillain.getId());        
+        sighting.setLocationId(location.getId());
+        sighting.setSuperId(heroVillain.getId());        
         sightingDao.addSighting(sighting); //save sighting
         
         Sighting sighting2 = new Sighting(); //Create sighting2
         sighting2.setDate(LocalDate.now());
-        sighting2.setLocation_id(location.getId());
-        sighting2.setSuper_id(heroVillain2.getId());        
+        sighting2.setLocationId(location.getId());
+        sighting2.setSuperId(heroVillain2.getId());        
         sightingDao.addSighting(sighting2); //save sighting2
         
         List<Super> supersByLocationFromDao = superDao.getSupersByLocation(location); //get the saved supers by location from db

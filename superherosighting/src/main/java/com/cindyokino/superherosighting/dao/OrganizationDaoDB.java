@@ -83,9 +83,6 @@ public class OrganizationDaoDB implements OrganizationDao{
                 organization.getAddress(),
                 organization.getContact(),
                 organization.getId());
-        
-        final String DELETE_SIGHTING = "DELETE FROM super_organization WHERE organization_id = ?";
-        jdbc.update(DELETE_SIGHTING, organization.getId());
     }
 
     

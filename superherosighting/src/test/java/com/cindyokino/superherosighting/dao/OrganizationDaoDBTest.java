@@ -1,9 +1,6 @@
 package com.cindyokino.superherosighting.dao;
 
-import com.cindyokino.superherosighting.entity.Location;
 import com.cindyokino.superherosighting.entity.Organization;
-import com.cindyokino.superherosighting.entity.Power;
-import com.cindyokino.superherosighting.entity.Sighting;
 import com.cindyokino.superherosighting.entity.Super;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,19 +26,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class OrganizationDaoDBTest {
     
-    //Autowire in the DAO classes:
+    //Autowire in the DAO classes:    
     @Autowired
-    LocationDao locationDao;
-    
-    @Autowired
-    OrganizationDao organizationDao;
-    
-    @Autowired
-    PowerDao powerDao;
-    
-    @Autowired
-    SightingDao sightingDao;
-            
+    OrganizationDao organizationDao;    
+                
     @Autowired
     SuperDao superDao;
     
@@ -59,25 +47,10 @@ public class OrganizationDaoDBTest {
     
     @Before
     public void setUp() {
-        List<Location> locations = locationDao.getAllLocations();
-        for(Location location : locations) {
-            locationDao.deleteLocationById(location.getId());
-        }
-        
         List<Organization> organizations = organizationDao.getAllOrganizations();
         for(Organization organization : organizations) {
             organizationDao.deleteOrganizationById(organization.getId());
-        }
-        
-        List<Power> powers = powerDao.getAllPowers();
-        for(Power power : powers) {
-            powerDao.deletePowerById(power.getId());
-        }
-        
-        List<Sighting> sightings = sightingDao.getAllSightings();
-        for(Sighting sighting : sightings) {
-            sightingDao.deleteSightingById(sighting.getId());
-        }
+        }        
         
         List<Super> supers = superDao.getAllSupers();
         for(Super hero_villain : supers) {
@@ -173,13 +146,13 @@ public class OrganizationDaoDBTest {
         List<Organization> organizations = new ArrayList<>();
         organizations.add(organization);
 
-        Super super_villain = new Super(); //Create a super
-        super_villain.setName("Test Super Name");
-        super_villain.setDescription("Test Super Description");        
-        super_villain.setOrganizations(organizations); //add organizations list
-        superDao.addSuper(super_villain); //save super 
+        Super heroVillain = new Super(); //Create a super
+        heroVillain.setName("Test Super Name");
+        heroVillain.setDescription("Test Super Description");        
+        heroVillain.setOrganizations(organizations); //add organizations list
+        superDao.addSuper(heroVillain); //save super 
         
-        Super savedSuper = superDao.getSuperById(super_villain.getId());
+        Super savedSuper = superDao.getSuperById(heroVillain.getId());
         
         assertEquals(savedSuper.getOrganizations().get(0).getId(), organization.getId());
         
@@ -191,7 +164,7 @@ public class OrganizationDaoDBTest {
         organizationFromDao = organizationDao.getOrganizationById(organization.getId());
         assertNull(organizationFromDao); //Assert that the organization was deleted
         
-        Super superWithoutOrganization = superDao.getSuperById(super_villain.getId());
+        Super superWithoutOrganization = superDao.getSuperById(heroVillain.getId());
         
         assertEquals(superWithoutOrganization.getOrganizations().size(), 0); //Assert that this super doesn't have an organization        
     }
