@@ -44,3 +44,30 @@ A completed exercise will include the following products:
   * DAO and DTOs must fully represent all data and relationships contained in the database design.
   * Implementation must make proper use of transactions.
   * Unit tests must fully test all create, read, update, and delete functionality for all entities and test all many-to-many and one-to-many relationships in the database.
+  
+  
+## Part 2: Superhero Sightings Spring Boot Web App  
+
+### Requirements
+The Hero Education and Relationship Organization (HERO) is so impressed with the work we did on the Superhero Sightings Data Layer project that they have awarded us a contract to build a Spring Boot web application.
+
+The system has the following requirements:
+
+* It must have a screen(s) to create, view, edit, and delete superheroes/supervillains in the system.
+* It must have a screen(s) to create, view, edit, and delete superpowers in the system.
+* It must have a screen(s) to create, view, edit, and delete locations in the system.
+* It must have a screen(s) to create, view, edit, and delete superhero/supervillain organizations in the system.
+* It must have a screen(s) to create, view, edit, and delete superhero/supervillain sighting (superhero/supervillain, location, and time) in the system.
+* It must have a home page that displays general information about the application, navigation to all the other pages, and a newsfeed of the latest 10 sightings in the database.
+* CHALLENGE 1: Allow users to upload a picture for each superhero/supervillain and then display the picture when the sighting(s) of that superhero/supervillain is displayed.
+* CHALLENGE 2: Incorporate Google Maps into the home/landing page and show the location of each of the sightings in the sightings news feed (this is a stretch goal - completely on your own. We have no material about incorporating Google maps into your application).
+
+### Deliverables
+
+* Wireframes for all pages in the web app:
+  * You may use tools such as Balsamiq, Pencil, Draw.IO, or LucidChart.
+  * Include notes on endpoints, path variables / query string / form parameters as appropriate.
+* Spring Boot Web App Implementation:
+  * Web application must be built following the MVC patterns presented in the course.
+  * Implementation must make proper use of dependency injection.
+  * Web application must fully integrate the Superhero Sighting Data Layer.
