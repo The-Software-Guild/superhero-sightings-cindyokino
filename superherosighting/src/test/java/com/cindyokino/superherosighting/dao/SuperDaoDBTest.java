@@ -482,7 +482,7 @@ public class SuperDaoDBTest {
         savedSuper = superDao.getSuperById(heroVillain.getId());
         assertEquals(savedSuper.getPowers().size(), 0); //There is no power in the list, the link was deleted
     
-        Power savedPower = powerDao.getPowerowerById(power.getId());
+        Power savedPower = powerDao.getPowerById(power.getId());
         assertEquals(power, savedPower); //Assert that the power still exists
     }
 

@@ -71,7 +71,7 @@ public class PowerDaoDBTest {
         power.setDescription("Test Description");
         power = powerDao.addPower(power);
         
-        Power powerFromDao = powerDao.getPowerowerById(power.getId());
+        Power powerFromDao = powerDao.getPowerById(power.getId());
         
         assertEquals(power, powerFromDao);
     }
@@ -108,7 +108,7 @@ public class PowerDaoDBTest {
         power.setDescription("Test Description");
         power = powerDao.addPower(power);
         
-        Power powerFromDao = powerDao.getPowerowerById(power.getId());
+        Power powerFromDao = powerDao.getPowerById(power.getId());
         assertEquals(power, powerFromDao);
         
         power.setName("New Name");
@@ -116,7 +116,7 @@ public class PowerDaoDBTest {
         
         assertNotEquals(power, powerFromDao);
         
-        powerFromDao = powerDao.getPowerowerById(power.getId());
+        powerFromDao = powerDao.getPowerById(power.getId());
         
         assertEquals(power, powerFromDao);
     }
@@ -143,12 +143,12 @@ public class PowerDaoDBTest {
         
         assertEquals(savedSuper.getPowers().get(0).getId(), power.getId()); //Assert that the power on the savedSuper's powers list is the power we created
         
-        Power powerFromDao = powerDao.getPowerowerById(power.getId()); //get the saved power from db
+        Power powerFromDao = powerDao.getPowerById(power.getId()); //get the saved power from db
         assertEquals(power, powerFromDao);
         
         powerDao.deletePowerById(power.getId());
         
-        powerFromDao = powerDao.getPowerowerById(power.getId());
+        powerFromDao = powerDao.getPowerById(power.getId());
         assertNull(powerFromDao); //Assert that the power was deleted
         
         Super superWithoutPower = superDao.getSuperById(heroVillain.getId());

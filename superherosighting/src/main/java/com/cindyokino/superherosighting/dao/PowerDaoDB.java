@@ -26,7 +26,7 @@ public class PowerDaoDB implements PowerDao{
     //Create the SELECT query string and use it in queryForObject to get the one Power we are searching for.
     //Surround the code with a try-catch that will catch the exception thrown when there is no Power with that ID, so we can return null in that situation.
     @Override
-    public Power getPowerowerById(int id) {
+    public Power getPowerById(int id) {
         try {
             final String SELECT_POWER_BY_ID = "SELECT * FROM power WHERE id = ?";
             return jdbc.queryForObject(SELECT_POWER_BY_ID, new PowerDaoDB.PowerMapper(), id);

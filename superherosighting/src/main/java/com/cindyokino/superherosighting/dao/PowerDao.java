@@ -8,7 +8,7 @@ import java.util.List;
  * @author Cindy
  */
 public interface PowerDao {
-    Power getPowerowerById(int id);
+    Power getPowerById(int id);
     List<Power> getAllPowers();
     Power addPower(Power power);
     void updatePower(Power power);
