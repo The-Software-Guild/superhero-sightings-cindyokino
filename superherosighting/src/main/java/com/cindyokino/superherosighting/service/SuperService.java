@@ -5,6 +5,7 @@ import com.cindyokino.superherosighting.entity.Location;
 import com.cindyokino.superherosighting.entity.Organization;
 import com.cindyokino.superherosighting.entity.Power;
 import com.cindyokino.superherosighting.entity.Super;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,13 @@ public class SuperService {
     
     private final SuperDao superDao;
     
-    public SuperService(SuperDao superDao){
+    private final PowerService powerService;
+    private final OrganizationService organizationService;
+    
+    
+    public SuperService(SuperDao superDao, PowerService powerService, OrganizationService organizationService){
+        this.powerService = powerService;
+        this.organizationService = organizationService;
         this.superDao = superDao;
     }
     
@@ -32,13 +39,39 @@ public class SuperService {
         return supers;
     }    
     
-    public Super addSuper(Super heroVillain) {
+    public Super addSuper(Super heroVillain, List<String> powerIds, List<String> organizationIds) {
+        List<Power> powers = new ArrayList<>();
+        for(String powerId : powerIds) {
+            powers.add(powerService.getPowerById(Integer.parseInt(powerId)));
+        }
+        
+        List<Organization> organizations = new ArrayList<>();
+        for(String organizationId : organizationIds) {
+           organizations.add(organizationService.getOrganizationById(Integer.parseInt(organizationId)));
+        }
+        
+        heroVillain.setPowers(powers);
+        heroVillain.setOrganizations(organizations);
+        
         Super supper = superDao.addSuper(heroVillain);
         return supper;
     }
     
-    public void updateSuper(Super heroVillain) {
-        superDao.updateSuper(heroVillain);
+    public void updateSuper(Super heroVillain, List<String> powerIds, List<String> organizationIds) {
+        List<Power> powers = new ArrayList<>();
+        for(String powerId : powerIds) {
+            powers.add(powerService.getPowerById(Integer.parseInt(powerId)));
+        }
+        
+        List<Organization> organizations = new ArrayList<>();
+        for(String organizationId : organizationIds) {
+           organizations.add(organizationService.getOrganizationById(Integer.parseInt(organizationId)));
+        }
+        
+        heroVillain.setPowers(powers);
+        heroVillain.setOrganizations(organizations);
+        
+        superDao.updateSuper(heroVillain);    
     }
     
     public void deleteSuperById(int id) {

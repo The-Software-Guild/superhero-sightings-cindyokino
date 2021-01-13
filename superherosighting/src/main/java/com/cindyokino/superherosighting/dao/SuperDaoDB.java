@@ -101,7 +101,6 @@ public class SuperDaoDB implements SuperDao{
     //Just like the previous add method, this is @Transactional so we can retrieve the new ID.
     //We write our INSERT query and use it to insert the basic Super information into the database.
     //We get a new ID and add it to the Super object.
-    //We can then call our insertSighting helper method, which loops through the list of Locations in the Super and adds database entries to sighting for each.
     //We can then call our insertPower helper method, which loops through the list of Powers in the Super and adds database entries to super_power for each.
     //We can then call our insertOrganization helper method, which loops through the list of Organizations in the Super and adds database entries to super_organization for each.
     //Once we've done that, we can return the Course from the method.
@@ -126,19 +125,9 @@ public class SuperDaoDB implements SuperDao{
         return heroVillain;
     }  
     
-    //Loops through the list of Locations in the Super and adds database entries to sighting for each
-    public void insertSighting(Super heroVillain) {
-        final String INSERT_SIGHTING = "INSERT INTO "
-                + "sighting(super_id, location_id) VALUES(?,?)";
-        for(Location location : heroVillain.getLocations()) {
-            jdbc.update(INSERT_SIGHTING, 
-                    heroVillain.getId(),
-                    location.getId());
-        }
-    }
     
     //Loops through the list of Powers in the Super and adds database entries to super_power for each.
-    public void insertPower(Super heroVillain) {
+    private void insertPower(Super heroVillain) {
         final String INSERT_POWER = "INSERT INTO "
                 + "super_power(super_id, power_id) VALUES(?,?)";
         for(Power power : heroVillain.getPowers()) {
@@ -149,7 +138,7 @@ public class SuperDaoDB implements SuperDao{
     }
     
     //Loops through the list of Organizations in the Super and adds database entries to super_organization for each.
-    public void insertOrganization(Super heroVillain) {
+    private void insertOrganization(Super heroVillain) {
         final String INSERT_ORGANIZATION = "INSERT INTO "
                 + "super_organization(super_id, organization_id) VALUES(?,?)";
         for(Organization organization : heroVillain.getOrganizations()) {
@@ -163,7 +152,6 @@ public class SuperDaoDB implements SuperDao{
     /** ********** updateSuper. ********** **/
     //We are using @Transactional here because we are making multiple database-modifying queries in the method.
     //We write our UPDATE query and use it in the update method with the appropriate data.
-    //We need to handle the Sightings by first deleting all the sighting entries and then adding them back in with the call to insertSighting.
     //We need to handle the Powers by first deleting all the super_power entries and then adding them back in with the call to insertPower.
     //We need to handle the Organizations by first deleting all the super_organization entries and then adding them back in with the call to insertOrganization.
     @Override
@@ -175,15 +163,11 @@ public class SuperDaoDB implements SuperDao{
                 heroVillain.getDescription(), 
                 heroVillain.getId());
         
-        final String DELETE_SIGHTING = "DELETE FROM sighting WHERE super_id = ?";
-        jdbc.update(DELETE_SIGHTING, heroVillain.getId());        
-        insertSighting(heroVillain);
-        
-        final String DELETE_SUPER_POWER = "DELETE FROM sighting WHERE super_id = ?";
+        final String DELETE_SUPER_POWER = "DELETE FROM super_power WHERE super_id = ?";
         jdbc.update(DELETE_SUPER_POWER, heroVillain.getId());
         insertPower(heroVillain);
         
-        final String DELETE_SUPER_ORGANIZATION = "DELETE FROM sighting WHERE super_id = ?";
+        final String DELETE_SUPER_ORGANIZATION = "DELETE FROM super_organization WHERE super_id = ?";
         jdbc.update(DELETE_SUPER_ORGANIZATION, heroVillain.getId());        
         insertOrganization(heroVillain);
     }

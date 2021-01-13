@@ -24,10 +24,6 @@ public interface SuperDao {
     List<Power> getPowersForSuper(int id);
     List<Organization> getOrganizationsForSuper(int id);
     
-    void insertSighting(Super heroVillain);
-    void insertPower(Super heroVillain);
-    void insertOrganization(Super heroVillain);
-    
     void removePowerForSuper(int superId, int powerId);
     void removeOrganizationForSuper(int superId, int organizationId);
 }
