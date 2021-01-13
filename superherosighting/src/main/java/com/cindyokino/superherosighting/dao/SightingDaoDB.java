@@ -41,21 +41,6 @@ public class SightingDaoDB implements SightingDao{
 
     @Override
     @Transactional
-    public Sighting addSighting(Sighting sighting, LocalDate date) {
-        final String INSERT_SIGHTING = "INSERT INTO sighting(super_id, location_id, date) "
-                + "VALUES(?,?,?)";
-        jdbc.update(INSERT_SIGHTING,
-                sighting.getSuperId(),
-                sighting.getLocationId(),
-                date);
-        
-        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        sighting.setId(newId);
-        return sighting;
-    }
-
-    @Override
-    @Transactional
     public Sighting addSighting(Sighting sighting) {
         final String INSERT_SIGHTING = "INSERT INTO sighting(super_id, location_id, date) "
                 + "VALUES(?,?,?)";
