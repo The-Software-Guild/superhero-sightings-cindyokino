@@ -2,6 +2,7 @@ package com.cindyokino.superherosighting.entity;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -11,7 +12,11 @@ public class Sighting {
     private int id;
     private int superId;
     private int locationId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+    
+    private Super supper;
+    private Location location;
 
     public int getId() {
         return id;
@@ -44,6 +49,24 @@ public class Sighting {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public Super getSupper() {
+        return supper;
+    }
+
+    public void setSupper(Super supper) {
+        this.supper = supper;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+    
+    
 
     @Override
     public int hashCode() {

@@ -1,7 +1,6 @@
 package com.cindyokino.superherosighting.service;
 
 import com.cindyokino.superherosighting.dao.SightingDao;
-import com.cindyokino.superherosighting.entity.Location;
 import com.cindyokino.superherosighting.entity.Sighting;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,32 +14,42 @@ import org.springframework.stereotype.Service;
 public class SightingService {
         
     private final SightingDao sightingDao;
+    private final SuperService superService;
+    private final LocationService locationService;
     
-    public SightingService(SightingDao sightingDao) {
+    public SightingService(SightingDao sightingDao, SuperService superService, LocationService locationService) {
         this.sightingDao = sightingDao;
+        this.superService = superService;
+        this.locationService= locationService;
     }
     
     
     public Sighting getSightingById(int id) {
         Sighting sighting = sightingDao.getSightingById(id);
+        sighting.setSupper(superService.getSuperById(sighting.getSuperId())); //get super name
+        sighting.setLocation(locationService.getLocationById(sighting.getLocationId())); //get location name
+        
         return sighting;
     }
     
     public List<Sighting> getAllSightings() {
         List<Sighting> sightings = sightingDao.getAllSightings();
+        sightings.forEach(sighting -> sighting.setSupper(superService.getSuperById(sighting.getSuperId()))); //get supers names
+        sightings.forEach(sighting -> sighting.setLocation(locationService.getLocationById(sighting.getLocationId()))); //get locations names
+        
         return sightings;
     }
     
-    public Sighting addLocation(Sighting sighting) {
+    public Sighting addSighting(Sighting sighting) {
         Sighting newSighting = sightingDao.addSighting(sighting);
         return newSighting;
     }
     
-    public void updateLocation(Sighting sighting) {
+    public void updateSighting(Sighting sighting) {
         sightingDao.updateSighting(sighting);
     }
     
-    public void deleteLocationById(int id) {
+    public void deleteSightingById(int id) {
         sightingDao.deleteSightingById(id);
     }
     
