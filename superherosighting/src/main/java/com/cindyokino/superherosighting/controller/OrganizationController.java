@@ -1,8 +1,8 @@
 package com.cindyokino.superherosighting.controller;
 
-import com.cindyokino.superherosighting.dao.PowerDao;
-import com.cindyokino.superherosighting.entity.Power;
-import com.cindyokino.superherosighting.service.PowerService;
+import com.cindyokino.superherosighting.dao.OrganizationDao;
+import com.cindyokino.superherosighting.entity.Organization;
+import com.cindyokino.superherosighting.service.OrganizationService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,65 +14,62 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @author Cindy
  */
 @Controller
-public class PowerController {
+public class OrganizationController {
     
-    private final PowerDao powerDao;
-    private final PowerService powerService;
+    private final OrganizationDao organizationDao;
+    private final OrganizationService organizationService;
     
-    public PowerController(PowerDao powerDao, PowerService powerService){
-        this.powerDao = powerDao;
-        this.powerService = powerService;
+    public OrganizationController(OrganizationDao organizationDao, OrganizationService organizationService){
+        this.organizationDao = organizationDao;
+        this.organizationService = organizationService;
     }
     
     
-    @GetMapping("powers") //Go to powers html page
-    public String displayPowers(Model model) {
-        List<Power> powers = powerDao.getAllPowers();
-        model.addAttribute("powers", powers);
-        return "powers"; //returning "powers" means we will need a powers.html file to push our data to
+    @GetMapping("organizations") //Go to organizations html page
+    public String displayOrganizations(Model model) {
+        List<Organization> organizations = organizationDao.getAllOrganizations();
+        model.addAttribute("organizations", organizations);
+        return "organizations"; //returning "organizations" means we will need a organizations.html file to push our data to
     }
     
-    @PostMapping("addPower")
-    public String addPower(String name, String description) {
-        Power power = new Power();
-        power.setName(name);
-        power.setDescription(description);
-        powerService.addPower(power);
+    @PostMapping("addOrganization")
+    public String addOrganization(Organization organization) {
+        organizationService.addOrganization(organization);
         
-        return "redirect:/powers";
+        return "redirect:/organizations";
     }
     
-    @GetMapping("detailPower") //Go to detailPower html page
-    public String detailPower(Integer id, Model model) {
-        Power power = powerService.getPowerById(id);
-        model.addAttribute("power", power);
-        return "detailPower";
+    @GetMapping("detailOrganization") //Go to detailOrganization html page
+    public String detailOrganization(Integer id, Model model) {
+        Organization organization = organizationService.getOrganizationById(id);
+        model.addAttribute("organization", organization);
+        return "detailOrganization";
     }
     
-    @GetMapping("displayDeletePower") //Go to deletePower html page for confirmation
-    public String displayDeletePower(Integer id, Model model) { 
-        Power power = powerService.getPowerById(id);
-        model.addAttribute("power", power);
-        return "deletePower";
+    @GetMapping("displayDeleteOrganization") //Go to deleteOrganization html page for confirmation
+    public String displayDeleteOrganization(Integer id, Model model) { 
+        Organization organization = organizationService.getOrganizationById(id);
+        model.addAttribute("organization", organization);
+        return "deleteOrganization";
     }
     
-    @GetMapping("deletePower")
-    public String deletePower(Integer id) {
-        powerService.deletePowerById(id);
-        return "redirect:/powers";
+    @GetMapping("deleteOrganization")
+    public String deleteOrganization(Integer id) {
+        organizationService.deleteOrganizationById(id);
+        return "redirect:/organizations";
     }  
         
-     @GetMapping("editPower") //Go to editPower html page
-        public String editPower(Integer id, Model model) {
-        Power power = powerService.getPowerById(id);
-        model.addAttribute("power", power);
-        return "editPower";
+     @GetMapping("editOrganization") //Go to editOrganization html page
+        public String editOrganization(Integer id, Model model) {
+        Organization organization = organizationService.getOrganizationById(id);
+        model.addAttribute("organization", organization);
+        return "editOrganization";
     }
     
-    @PostMapping("editPower")
-    public String performEditPower(Power power) { 
-        powerService.updatePower(power);
-        return "redirect:/detailPower?id=" + power.getId();
+    @PostMapping("editOrganization")
+    public String performEditOrganization(Organization organization) { 
+        organizationService.updateOrganization(organization);
+        return "redirect:/detailOrganization?id=" + organization.getId();
     }
     
 }

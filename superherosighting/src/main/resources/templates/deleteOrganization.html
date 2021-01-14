@@ -46,7 +46,7 @@
                 <div class="col text-center m-3">
                     <h3>Are you sure you want to delete the organization "<span th:text="${organization.name}">display name</span>"?</h3>
                     <a href="#" th:href="@{/deleteOrganization(id=${organization.id})}" class="btn btn-primary btn-md">Ok</a>
-                    <a href="#" th:href="@{/organizations(id=${organization.id})}" class="btn btn-danger btn-md">Cancel</a>
+                    <a href="#" th:href="organizations" class="btn btn-danger btn-md">Cancel</a>
                 </div>
             </div>
             

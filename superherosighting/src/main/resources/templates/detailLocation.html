@@ -60,6 +60,18 @@
                 <div class="col-6 text-left">
                     <span th:text="${location.description}">display description</span>
                 </div>
+                <div class="col-6 text-right"><strong>Address</strong></div>
+                <div class="col-6 text-left">
+                    <span th:text="${location.address}">display address</span>
+                </div>
+                <div class="col-6 text-right"><strong>Latitude</strong></div>
+                <div class="col-6 text-left">
+                    <span th:text="${location.latitude}">display latitude</span>
+                </div>
+                <div class="col-6 text-right"><strong>Longitude</strong></div>
+                <div class="col-6 text-left">
+                    <span th:text="${location.longitude}">display longitude</span>
+                </div>
                 
                 <div class="col-10 text-center m-3">
                     <a href="#" th:href="@{/editLocation(id=${location.id})}" class="btn btn-primary btn-md">Edit</a>

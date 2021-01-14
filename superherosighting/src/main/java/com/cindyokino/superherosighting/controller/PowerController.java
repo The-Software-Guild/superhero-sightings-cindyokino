@@ -33,10 +33,7 @@ public class PowerController {
     }
     
     @PostMapping("addPower")
-    public String addPower(String name, String description) {
-        Power power = new Power();
-        power.setName(name);
-        power.setDescription(description);
+    public String addPower(Power power) {
         powerService.addPower(power);
         
         return "redirect:/powers";

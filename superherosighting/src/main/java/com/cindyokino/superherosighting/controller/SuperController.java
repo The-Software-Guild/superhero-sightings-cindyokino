@@ -3,10 +3,8 @@ package com.cindyokino.superherosighting.controller;
 import com.cindyokino.superherosighting.entity.Organization;
 import com.cindyokino.superherosighting.entity.Power;
 import com.cindyokino.superherosighting.entity.Super;
-import com.cindyokino.superherosighting.service.LocationService;
 import com.cindyokino.superherosighting.service.OrganizationService;
 import com.cindyokino.superherosighting.service.PowerService;
-import com.cindyokino.superherosighting.service.SightingService;
 import com.cindyokino.superherosighting.service.SuperService;
 import java.util.Arrays;
 import java.util.List;
@@ -24,22 +22,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class SuperController {
     
-   private final LocationService locationService;
    private final OrganizationService organizationService;
    private final PowerService powerService;
-   private final SightingService sightingService;
    private final SuperService superService;  
    
-   public SuperController(LocationService locationService, OrganizationService organizationService, PowerService powerService, SightingService sightingService, SuperService superService) {
-        this.locationService = locationService;
+   public SuperController(OrganizationService organizationService, PowerService powerService, SuperService superService) {
         this.organizationService = organizationService;
         this.powerService = powerService;    
-        this.sightingService = sightingService;    
         this.superService = superService;    
     }
     
    
-   @GetMapping("supers")
+   @GetMapping("supers") //Go to supers html page
     public String displaySupers(Model model) {
         List<Super> supers = superService.getAllSupers();
         List<Power> powers = powerService.getAllPowers();
@@ -52,7 +46,7 @@ public class SuperController {
     
     @PostMapping("addSuper")
     public String addSuper(Super supper, HttpServletRequest request) {        
-        List<String> powerIds = Arrays.asList(Optional.ofNullable(request.getParameterValues("power_id")).orElse(new String[0]));
+        List<String> powerIds = Arrays.asList(Optional.ofNullable(request.getParameterValues("power_id")).orElse(new String[0])); //if the received parameter is null, create an empty list
         List<String> organizationIds = Arrays.asList(Optional.ofNullable(request.getParameterValues("organization_id")).orElse(new String[0]));
       
         superService.addSuper(supper, powerIds, organizationIds);
@@ -60,7 +54,7 @@ public class SuperController {
         return "redirect:/supers";
     }
     
-    @GetMapping("detailSuper")
+    @GetMapping("detailSuper") //Go to detailSuper html page
     public String superDetail(Integer id, Model model) {
         Super supper = superService.getSuperById(id);
         model.addAttribute("super", supper);
@@ -71,7 +65,7 @@ public class SuperController {
     public String displayDeleteSuper(Integer id, Model model) { 
         Super supper = superService.getSuperById(id);
         model.addAttribute("super", supper);
-        return "deleteSuper"; //returning "deleteSuper" means we will need a deleteSuper.html file to push our data to
+        return "deleteSuper";
     }
     
     @GetMapping("deleteSuper")
@@ -80,7 +74,7 @@ public class SuperController {
         return "redirect:/supers";
     }
     
-    @GetMapping("editSuper")
+    @GetMapping("editSuper") //Go to editSuper html page
     public String editSuper(Integer id, Model model) {
         Super supper = superService.getSuperById(id);
         List<Power> powers = powerService.getAllPowers();
@@ -99,7 +93,6 @@ public class SuperController {
         superService.updateSuper(supper, powerIds, organizationIds);
 
         return "redirect:/detailSuper?id=" + supper.getId();
-//        return new ModelAndView("redirect:/detailSuper/${supper.getId()}", supper.getId());
     }
     
 }

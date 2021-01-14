@@ -46,7 +46,7 @@
                 <div class="col text-center m-3">
                     <h3>Are you sure you want to delete the super "<span th:text="${super.name}">display name</span>"?</h3>
                     <a href="#" th:href="@{/deleteSuper(id=${super.id})}" class="btn btn-primary btn-md">Ok</a>
-                    <a href="#" th:href="@{/supers(id=${super.id})}" class="btn btn-danger btn-md">Cancel</a>
+                    <a href="#" th:href="supers" class="btn btn-danger btn-md">Cancel</a>
                 </div>
             </div>
             
