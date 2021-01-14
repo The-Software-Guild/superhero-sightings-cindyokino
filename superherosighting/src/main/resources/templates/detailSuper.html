@@ -75,6 +75,13 @@
                             display organizations</span><br/>
                     </span>
                 </div>
+                <div class="col-6 text-right"><strong>Locations</strong></div>
+                <div class="col-6 text-left">
+                    <span th:each="location : ${super.locations}">
+                        <span th:text="${location.name}">
+                            display locations</span><br/>
+                    </span>
+                </div>
                 <div class="col-10 text-center m-3">
                     <a href="#" th:href="@{/editSuper(id=${super.id})}" class="btn btn-primary btn-md">Edit</a>
                     <a href="#" th:href="@{/displayDeleteSuper(id=${super.id})}" class="btn btn-danger btn-md">Delete</a>

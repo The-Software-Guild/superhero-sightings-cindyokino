@@ -74,6 +74,10 @@
                             <label for="date" class="col-3 col-form-label">Date</label>
                             <div class="col-9">
                                 <input type="date" id="date" name="date" class="form-control"  th:value="${currentDate}">
+                                <div th:if="${#fields.hasErrors('sighting.date')}">
+                                    <p th:each="error : ${#fields.errors('sighting.date')}" class="alert alert-danger" 
+                                        th:text="${error}"> Select date error</p>
+                                </div>
                             </div>
                         </div> 
                         <input type="hidden" name="id" th:value="${sighting.id}"/>

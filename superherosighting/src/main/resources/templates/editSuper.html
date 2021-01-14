@@ -51,6 +51,10 @@
                             <div class="col-9">
                                 <input type="text" name="name" id="name" class="form-control"
                                        th:value="${super.name}"/>
+                                <div th:if="${#fields.hasErrors('super.name')}">
+                                    <p th:each="error : ${#fields.errors('super.name')}" class="alert alert-danger" 
+                                        th:text="${error}"> Name errors</p>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">

@@ -68,6 +68,13 @@
                 <div class="col-6 text-left">
                     <span th:text="${organization.contact}">display contact</span>
                 </div>
+                <div class="col-6 text-right"><strong>Members</strong></div>
+                <div class="col-6 text-left">
+                    <span th:each="member : ${members}">
+                        <span th:text="${member.name}">
+                            display members</span><br/>
+                    </span>
+                </div>
                 
                 <div class="col-10 text-center m-3">
                     <a href="#" th:href="@{/editOrganization(id=${organization.id})}" class="btn btn-primary btn-md">Edit</a>

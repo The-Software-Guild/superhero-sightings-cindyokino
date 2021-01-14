@@ -72,6 +72,13 @@
                 <div class="col-6 text-left">
                     <span th:text="${location.longitude}">display longitude</span>
                 </div>
+                <div class="col-6 text-right"><strong>Supers seen here</strong></div>
+                <div class="col-6 text-left">
+                    <span th:each="super : ${supers}">
+                        <span th:text="${super.name}">
+                            display locations</span><br/>
+                    </span>
+                </div>
                 
                 <div class="col-10 text-center m-3">
                     <a href="#" th:href="@{/editLocation(id=${location.id})}" class="btn btn-primary btn-md">Edit</a>

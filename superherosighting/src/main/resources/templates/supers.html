@@ -57,17 +57,23 @@
                                 Name</label>
                             <div class="col-9">
                                 <input type="text" name="name" 
-                                       id="name" class="form-control"/>
+                                       id="name" class="form-control" th:value="${super.name}"/>
+                                <div th:if="${#fields.hasErrors('super.name')}">
+                                    <p th:each="error : ${#fields.errors('super.name')}" class="alert alert-danger" 
+                                        th:text="${error}"> Name errors</p>
+                                </div>
                             </div>
                         </div>
+                        
                         <div class="form-group row">
                             <label for="description" class="col-3 col-form-label">
                                 Description</label>
                             <div class="col-9">
                                 <input type="text" name="description" 
-                                       id="description" class="form-control"/>
+                                       id="description" class="form-control" th:value="${super.description}"/>
                             </div>
                         </div>
+                        
                         <div class="form-group row">
                             <label for="powers" class="col-3 col-form-label">
                                 Powers</label>
@@ -82,7 +88,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="powers" class="col-3 col-form-label">
+                            <label for="organizations" class="col-3 col-form-label">
                                 Organizations</label>
                             <div class="col-9">
                                 <select multiple id="organizations" name="organization_id" 

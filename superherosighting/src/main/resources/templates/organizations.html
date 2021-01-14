@@ -58,7 +58,11 @@
                                 Name</label>
                             <div class="col-9">
                                 <input type="text" name="name" 
-                                       id="name" class="form-control"/>
+                                       id="name" class="form-control" th:value="${organization.name}"/>
+                                <div th:if="${#fields.hasErrors('organization.name')}">
+                                    <p th:each="error : ${#fields.errors('organization.name')}" class="alert alert-danger" 
+                                        th:text="${error}"> Name errors</p>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -66,7 +70,7 @@
                                 Description</label>
                             <div class="col-9">
                                 <input type="text" name="description" 
-                                       id="description" class="form-control"/>
+                                       id="description" class="form-control" th:value="${organization.description}"/>
                             </div>
                         </div> 
                         <div class="form-group row">
@@ -74,7 +78,7 @@
                                 Address</label>
                             <div class="col-9">
                                 <input type="text" name="address" 
-                                       id="address" class="form-control"/>
+                                       id="address" class="form-control" th:value="${organization.address}"/>
                             </div>
                         </div> 
                         <div class="form-group row">
@@ -82,7 +86,7 @@
                                 Contact</label>
                             <div class="col-9">
                                 <input type="text" name="contact" 
-                                       id="contact" class="form-control"/>
+                                       id="contact" class="form-control" th:value="${organization.contact}"/>
                             </div>
                         </div> 
                         <button type="submit" class="btn btn-primary">Add Organization</button>
