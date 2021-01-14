@@ -8,13 +8,14 @@ import com.cindyokino.superherosighting.service.LocationService;
 import com.cindyokino.superherosighting.service.SightingService;
 import com.cindyokino.superherosighting.service.SuperService;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -46,16 +47,22 @@ public class SightingController {
         model.addAttribute("sightings", sightings);
         model.addAttribute("supers", supers);
         model.addAttribute("locations", locations);
+
+        model.addAttribute("sighting", model.getAttribute("sighting") != null ? model.getAttribute("sighting") : new Sighting());
         
         return "sightings"; //returning "sightings" means we will need a sightings.html file to push our data to
     }
     
     @PostMapping("addSighting")
-    public String addSighting(Sighting sighting, HttpServletRequest request) {
+    public String addSighting(@Valid Sighting sighting, BindingResult result, HttpServletRequest request, Model model) {        
         String superId = request.getParameter("super_id");
         String locationId = request.getParameter("location_id");        
         sighting.setSuperId(Integer.parseInt(superId));
-        sighting.setLocationId(Integer.parseInt(locationId));        
+        sighting.setLocationId(Integer.parseInt(locationId)); 
+        
+        if(result.hasErrors()){    
+            return displaySightings(model);
+        }
         sightingDao.addSighting(sighting);        
         return "redirect:/sightings";
     }
@@ -80,25 +87,35 @@ public class SightingController {
         return "redirect:/sightings";
     }  
         
-     @GetMapping("editSighting") //Go to editSighting html page
-        public String editSighting(Integer id, Model model) {
+    @GetMapping("editSighting") //Go to editSighting html page
+    public String editSighting(Integer id, Model model) {
         List<Super> supers = superService.getAllSupers();
         List<Location> locations = locationService.getAllLocations();
+        Sighting sighting = sightingService.getSightingById(id);
+        
+        if(model.getAttribute("sighting") != null) {
+            ((Sighting) model.getAttribute("sighting")).setSuperId(sighting.getSuperId());
+            ((Sighting) model.getAttribute("sighting")).setLocationId(sighting.getLocationId());
+        }
+        model.addAttribute("sighting", model.getAttribute("sighting") != null ? model.getAttribute("sighting") : sighting);
         model.addAttribute("supers", supers);
         model.addAttribute("locations", locations); 
-        model.addAttribute("currentDate", LocalDate.now().toString());
-            
-        Sighting sighting = sightingService.getSightingById(id);
+        model.addAttribute("currentDate", sighting.date);            
         model.addAttribute("sighting", sighting);
         return "editSighting";
     }
     
     @PostMapping("editSighting")
-    public String performEditSighting(Sighting sighting, HttpServletRequest request) { 
+    public String performEditSighting(@Valid Sighting sighting, BindingResult result, HttpServletRequest request, Model model) { 
         String superId = request.getParameter("super_id");
         String locationId = request.getParameter("location_id");        
         sighting.setSuperId(Integer.parseInt(superId));
-        sighting.setLocationId(Integer.parseInt(locationId));  
+        sighting.setLocationId(Integer.parseInt(locationId)); 
+        
+        if(result.hasErrors()){  
+            return editSighting(sighting.getId(), model);
+        } 
+        
         sightingService.updateSighting(sighting);
         return "redirect:/detailSighting?id=" + sighting.getId();
     }

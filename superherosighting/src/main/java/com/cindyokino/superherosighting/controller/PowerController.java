@@ -4,8 +4,10 @@ import com.cindyokino.superherosighting.dao.PowerDao;
 import com.cindyokino.superherosighting.entity.Power;
 import com.cindyokino.superherosighting.service.PowerService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -29,13 +31,21 @@ public class PowerController {
     public String displayPowers(Model model) {
         List<Power> powers = powerDao.getAllPowers();
         model.addAttribute("powers", powers);
+        
+        model.addAttribute("power", model.getAttribute("power") != null ? model.getAttribute("power") : new Power());
+        
         return "powers"; //returning "powers" means we will need a powers.html file to push our data to
     }
     
     @PostMapping("addPower")
-    public String addPower(Power power) {
-        powerService.addPower(power);
+    public String addPower(@Valid Power power, BindingResult result, Model model) {
+        if(result.hasErrors()) {
+            List<Power> powers = powerService.getAllPowers();
+            model.addAttribute("powers", powers);
+            return displayPowers(model);            
+        }
         
+        powerService.addPower(power);        
         return "redirect:/powers";
     }
     
@@ -67,7 +77,11 @@ public class PowerController {
     }
     
     @PostMapping("editPower")
-    public String performEditPower(Power power) { 
+    public String performEditPower(@Valid Power power, BindingResult result, Model model) {         
+        if(result.hasErrors()) {
+            return "editPower";
+        }
+        
         powerService.updatePower(power);
         return "redirect:/detailPower?id=" + power.getId();
     }

@@ -10,8 +10,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -41,16 +43,23 @@ public class SuperController {
         model.addAttribute("supers", supers);
         model.addAttribute("powers", powers);
         model.addAttribute("organizations", organizations);
+        model.addAttribute("super", model.getAttribute("super") != null ? model.getAttribute("super") : new Super());
+        
         return "supers"; //returning "supers" means we will need a supers.html file to push our data to
     }
     
     @PostMapping("addSuper")
-    public String addSuper(Super supper, HttpServletRequest request) {        
+    public String addSuper(@Valid Super supper, BindingResult result, HttpServletRequest request, Model model) {  
         List<String> powerIds = Arrays.asList(Optional.ofNullable(request.getParameterValues("power_id")).orElse(new String[0])); //if the received parameter is null, create an empty list
         List<String> organizationIds = Arrays.asList(Optional.ofNullable(request.getParameterValues("organization_id")).orElse(new String[0]));
       
-        superService.addSuper(supper, powerIds, organizationIds);
+        if(result.hasErrors()){  
+            List<Super> supers = superService.getAllSupers();
+            model.addAttribute("supers", supers); //to fill the listing
+            return displaySupers(model);
+        }            
         
+        superService.addSuper(supper, powerIds, organizationIds);        
         return "redirect:/supers";
     }
     
@@ -79,16 +88,25 @@ public class SuperController {
         Super supper = superService.getSuperById(id);
         List<Power> powers = powerService.getAllPowers();
         List<Organization> organizations = organizationService.getAllOrganizations();
-        model.addAttribute("super", supper);
+        
+        if(model.getAttribute("super") != null) {
+            ((Super) model.getAttribute("super")).setPowers(supper.getPowers());
+            ((Super) model.getAttribute("super")).setOrganizations(supper.getOrganizations());
+        }
+        model.addAttribute("super", model.getAttribute("super") != null ? model.getAttribute("super") : supper);
         model.addAttribute("powers", powers);
         model.addAttribute("organizations", organizations);
         return "editSuper";
     }
     
     @PostMapping("editSuper")
-    public String performEditSuper(Super supper, HttpServletRequest request) {        
+    public String performEditSuper(@Valid Super supper, BindingResult result, HttpServletRequest request, Model model) {        
         List<String> powerIds = Arrays.asList(Optional.ofNullable(request.getParameterValues("power_id")).orElse(new String[0]));
         List<String> organizationIds = Arrays.asList(Optional.ofNullable(request.getParameterValues("organization_id")).orElse(new String[0]));
+        
+        if(result.hasErrors()){  
+            return editSuper(supper.getId(), model);
+        } 
         
         superService.updateSuper(supper, powerIds, organizationIds);
 
