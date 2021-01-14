@@ -8,7 +8,10 @@ import com.cindyokino.superherosighting.service.LocationService;
 import com.cindyokino.superherosighting.service.SightingService;
 import com.cindyokino.superherosighting.service.SuperService;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -98,6 +101,21 @@ public class SightingController {
         sighting.setLocationId(Integer.parseInt(locationId));  
         sightingService.updateSighting(sighting);
         return "redirect:/detailSighting?id=" + sighting.getId();
+    }
+    
+//  INDEX PAGE - DISPLAY 10 MOST RECENT SIGHTINGS
+    @GetMapping("/") //Go to index html page
+    public String recentSightings(Model model) {
+        List<Sighting> sightings = sightingService.getAllSightings();      
+        
+        List<Sighting> recentSightings = sightings.stream()
+                .sorted(Comparator.comparing(Sighting::getDate).reversed()) //order by date from most recent to oldest
+                .limit(10) //get the 10 first sightings
+                .collect(Collectors.toList());        
+
+        model.addAttribute("sightings", recentSightings);
+        
+        return "index.html"; //returning "sightings" means we will need a sightings.html file to push our data to
     }
     
 }
