@@ -2,6 +2,7 @@ package com.cindyokino.superherosighting.entity;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -12,8 +13,9 @@ public class Sighting {
     private int id;
     private int superId;
     private int locationId;
+    @NotNull(message = "Date must not be empty.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
+    public LocalDate date;
     
     private Super supper;
     private Location location;

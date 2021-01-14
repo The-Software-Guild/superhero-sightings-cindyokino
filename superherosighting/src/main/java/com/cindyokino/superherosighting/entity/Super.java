@@ -2,6 +2,8 @@ package com.cindyokino.superherosighting.entity;
 
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -9,12 +11,16 @@ import java.util.Objects;
  */
 public class Super {
     private int id;
-    private String name;
+    
+    @NotBlank(message = "Name must not be empty.")
+    @Size(max = 50, message = "Name must be less than 50 characters.")
+    private String name;    
+
     private String description;
     private List<Location> locations;
     private List<Power> powers;
     private List<Organization> organizations;
-
+    
     
     public int getId() {
         return id;

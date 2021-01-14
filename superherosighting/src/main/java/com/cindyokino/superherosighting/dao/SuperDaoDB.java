@@ -9,7 +9,9 @@ import com.cindyokino.superherosighting.entity.Power;
 import com.cindyokino.superherosighting.entity.Super;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -55,10 +57,17 @@ public class SuperDaoDB implements SuperDao{
     
     //JOIN from Location to sighting to get a list of Location objects for this Super.
     @Override
-    public List<Location> getLocationsForSuper(int id) {
+    public List<Location> getLocationsForSuper(int id) {       
+        
         final String SELECT_LOCATIONS_FOR_SUPER = "SELECT l.* FROM location l "
                 + "JOIN sighting si ON si.location_id = l.id WHERE si.super_id = ?";
-        return jdbc.query(SELECT_LOCATIONS_FOR_SUPER, new LocationMapper(), id);
+        List<Location> locations = jdbc.query(SELECT_LOCATIONS_FOR_SUPER, new LocationMapper(), id);
+        
+        Set<Location> set = new HashSet<>(locations); //remove duplicate locations from list
+        locations.clear();
+        locations.addAll(set);
+
+        return locations;
     } 
 
     //JOIN from Power to super_power to get a list of Power objects for this Super
@@ -205,6 +214,11 @@ public class SuperDaoDB implements SuperDao{
                 + "sighting sig ON sig.super_id = s.id WHERE sig.location_id = ?";
         List<Super> supers = jdbc.query(SELECT_SUPERS_FOR_LOCATION, 
                 new SuperMapper(), location.getId());
+        
+        Set<Super> set = new HashSet<>(supers); //remove duplicate supers from list
+        supers.clear();
+        supers.addAll(set);
+
         associatePowerOrganizationSighting(supers);
         return supers;
     }

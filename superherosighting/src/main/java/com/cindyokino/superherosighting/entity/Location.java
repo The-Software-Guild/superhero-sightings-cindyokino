@@ -1,6 +1,11 @@
 package com.cindyokino.superherosighting.entity;
 
 import java.util.Objects;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
@@ -8,10 +13,22 @@ import java.util.Objects;
  */
 public class Location {
     private int id;
+    
+    @NotBlank(message = "Name must not be empty.")
+    @Size(max = 50, message = "Name must be less than 50 characters.")
     private String name;
     private String description;
-    private String address; 
+    
+    @NotBlank(message = "Address must not be empty.")
+    @Size(max = 50, message = "Address must be less than 50 characters.")       
+    private String address;
+    
+    @NotNull(message = "Latitude must not be empty")
+    @Digits(integer=2, fraction=7)
     private Double latitude;
+    
+    @NotNull(message = "Longitude must not be empty")
+    @Digits(integer=3, fraction=7)
     private Double longitude;
 
     
