@@ -115,7 +115,7 @@ $(document).ready(function() {
     
 
     var data = message.map(msg => ({
-        "description": msg.location.description,
+        "super": msg.supper.name,
         "location": msg.location.name,
         "latitude": msg.location.latitude,
         "longitude": msg.location.longitude
@@ -168,7 +168,7 @@ function ViewCustInGoogleMap(data) {
             (
                 function(marker, i) {
                     return function() {
-                        infowindow.setContent(data[i]['location'] + data[i]['description']);
+                        infowindow.setContent(data[i]['super'] + " at " + data[i]['location']);
                         infowindow.open(map, marker);
                     };
                 }
@@ -180,5 +180,5 @@ function ViewCustInGoogleMap(data) {
 }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=YOU_API_KEY&sensor=true"
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&sensor=true"
     type="text/javascript"></script>
