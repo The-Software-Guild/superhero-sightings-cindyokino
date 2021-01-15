@@ -116,11 +116,14 @@ public class SuperDaoDB implements SuperDao{
     @Override
     @Transactional
     public Super addSuper(Super heroVillain) {
-        final String INSERT_SUPER = "INSERT INTO super(name, description) "
-                + "VALUES(?,?)";
+        final String INSERT_SUPER = "INSERT INTO super(name, description, super_image) "
+                + "VALUES(?,?,?)";
+        
         jdbc.update(INSERT_SUPER,
                 heroVillain.getName(),
-                heroVillain.getDescription());
+                heroVillain.getDescription(),
+                heroVillain.getSuperImage()
+        );
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         heroVillain.setId(newId);
@@ -263,7 +266,8 @@ public class SuperDaoDB implements SuperDao{
             Super heroVillain = new Super();
             heroVillain.setId(rs.getInt("id"));
             heroVillain.setName(rs.getString("name"));
-            heroVillain.setDescription(rs.getString("description"));   
+            heroVillain.setDescription(rs.getString("description")); 
+            heroVillain.setSuperImage(rs.getBytes("super_image"));
         
             return heroVillain;
         }

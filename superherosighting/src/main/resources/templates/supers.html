@@ -51,7 +51,7 @@
                     <span class="h3">Add Super</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addSuper" method="POST">
+                    <form action="addSuper" method="POST" enctype="multipart/form-data">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
                                 Name</label>
@@ -87,6 +87,7 @@
                                 </select>                                
                             </div>
                         </div>
+                        
                         <div class="form-group row">
                             <label for="organizations" class="col-3 col-form-label">
                                 Organizations</label>
@@ -99,7 +100,16 @@
                                         Organization</option>
                                 </select>
                             </div>
-                        </div>                        
+                        </div>  
+                        
+                        <div class="form-group row">
+                            <label for="superImage" class="col-3 col-form-label">Super Image</label>
+                            <div class="col-9 text-left">
+                                <input type="file" name="superImageToSave" 
+                                       id="superImage" class="file"/>
+                            </div>
+                        </div>
+                        
                         <button type="submit" class="btn btn-primary">Add Super</button>
                     </form>
                 </div>

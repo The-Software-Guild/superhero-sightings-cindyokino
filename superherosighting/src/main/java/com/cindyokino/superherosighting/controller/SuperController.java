@@ -6,16 +6,25 @@ import com.cindyokino.superherosighting.entity.Super;
 import com.cindyokino.superherosighting.service.OrganizationService;
 import com.cindyokino.superherosighting.service.PowerService;
 import com.cindyokino.superherosighting.service.SuperService;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -49,17 +58,18 @@ public class SuperController {
     }
     
     @PostMapping("addSuper")
-    public String addSuper(@Valid Super supper, BindingResult result, HttpServletRequest request, Model model) {  
+    public String addSuper(@Valid Super supper, BindingResult result, @RequestParam("superImageToSave") MultipartFile file, HttpServletRequest request, Model model, RedirectAttributes redirect) throws IOException {  
         List<String> powerIds = Arrays.asList(Optional.ofNullable(request.getParameterValues("power_id")).orElse(new String[0])); //if the received parameter is null, create an empty list
         List<String> organizationIds = Arrays.asList(Optional.ofNullable(request.getParameterValues("organization_id")).orElse(new String[0]));
-      
+        
         if(result.hasErrors()){  
             List<Super> supers = superService.getAllSupers();
             model.addAttribute("supers", supers); //to fill the listing
             return displaySupers(model);
         }            
         
-        superService.addSuper(supper, powerIds, organizationIds);        
+        superService.addSuper(supper, powerIds, organizationIds, file.getBytes());        
+//        superService.saveImageFile(supper.getId(), file);
         return "redirect:/supers";
     }
     
@@ -111,6 +121,15 @@ public class SuperController {
         superService.updateSuper(supper, powerIds, organizationIds);
 
         return "redirect:/detailSuper?id=" + supper.getId();
+    }
+    
+    @GetMapping("supers/{id}/image")
+    public void renderSuperImage(@PathVariable String id, HttpServletResponse response) throws IOException {
+        Super supper = superService.getSuperById(Integer.parseInt(id));
+        
+        response.setContentType("image/jpeg");
+        InputStream is = new ByteArrayInputStream(supper.getSuperImage());
+        IOUtils.copy(is, response.getOutputStream());
     }
     
 }

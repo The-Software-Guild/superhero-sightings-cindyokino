@@ -20,7 +20,15 @@ public class Super {
     private List<Location> locations;
     private List<Power> powers;
     private List<Organization> organizations;
-    
+    private byte[] superImage;
+
+    public byte[] getSuperImage() {
+        return superImage;
+    }
+
+    public void setSuperImage(byte[] superImage) {
+        this.superImage = superImage;
+    }    
     
     public int getId() {
         return id;

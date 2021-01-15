@@ -7,7 +7,6 @@ import com.cindyokino.superherosighting.entity.Super;
 import com.cindyokino.superherosighting.service.LocationService;
 import com.cindyokino.superherosighting.service.SightingService;
 import com.cindyokino.superherosighting.service.SuperService;
-import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -134,5 +133,5 @@ public class SightingController {
         
         return "index.html"; //returning "sightings" means we will need a sightings.html file to push our data to
     }
-    
+       
 }
