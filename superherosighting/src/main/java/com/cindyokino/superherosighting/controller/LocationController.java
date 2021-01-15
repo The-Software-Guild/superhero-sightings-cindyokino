@@ -2,7 +2,6 @@ package com.cindyokino.superherosighting.controller;
 
 import com.cindyokino.superherosighting.dao.LocationDao;
 import com.cindyokino.superherosighting.entity.Location;
-import com.cindyokino.superherosighting.entity.Power;
 import com.cindyokino.superherosighting.entity.Super;
 import com.cindyokino.superherosighting.service.LocationService;
 import com.cindyokino.superherosighting.service.SuperService;

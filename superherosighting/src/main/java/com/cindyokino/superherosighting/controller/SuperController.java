@@ -69,7 +69,6 @@ public class SuperController {
         }            
         
         superService.addSuper(supper, powerIds, organizationIds, file.getBytes());        
-//        superService.saveImageFile(supper.getId(), file);
         return "redirect:/supers";
     }
     

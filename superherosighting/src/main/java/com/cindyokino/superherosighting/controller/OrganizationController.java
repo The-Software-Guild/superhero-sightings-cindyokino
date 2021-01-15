@@ -2,12 +2,11 @@ package com.cindyokino.superherosighting.controller;
 
 import com.cindyokino.superherosighting.dao.OrganizationDao;
 import com.cindyokino.superherosighting.entity.Organization;
+import com.cindyokino.superherosighting.entity.Power;
 import com.cindyokino.superherosighting.entity.Super;
 import com.cindyokino.superherosighting.service.OrganizationService;
 import com.cindyokino.superherosighting.service.SuperService;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,15 +43,16 @@ public class OrganizationController {
     
     @PostMapping("addOrganization")
     public String addOrganization(@Valid Organization organization, BindingResult result, Model model) {
-        organizationService.addOrganization(organization);
-        
-        if(result.hasErrors()){  
+                 
+        if(result.hasErrors()) {
             List<Organization> organizations = organizationService.getAllOrganizations();
-            model.addAttribute("organizations", organizations); //to fill the listing
-            return displayOrganizations(model);
-        }  
+            model.addAttribute("organizations", organizations);
+            return displayOrganizations(model);            
+        } else {
+            organizationService.addOrganization(organization);
+            return "redirect:/organizations";            
+        }
         
-        return "redirect:/organizations";
     }
     
     @GetMapping("detailOrganization") //Go to detailOrganization html page

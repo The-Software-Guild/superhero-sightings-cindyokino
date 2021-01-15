@@ -5,11 +5,9 @@ import com.cindyokino.superherosighting.entity.Location;
 import com.cindyokino.superherosighting.entity.Organization;
 import com.cindyokino.superherosighting.entity.Power;
 import com.cindyokino.superherosighting.entity.Super;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -113,26 +111,5 @@ public class SuperService {
     public void removeOrganizationForSuper(int superId, int organizationId) {
         superDao.removeOrganizationForSuper(superId, organizationId);
     } 
-    
-//    public void saveImageFile(Integer id, MultipartFile file) {
-//        try {
-//            Super supper = superDao.getSuperById(id);
-//            byte[] byteObjects = new byte[file.getBytes().length];
-//            
-//            int i = 0;
-//            
-//            for (byte b : file.getBytes()) {
-//                byteObjects[i++] = b;
-//            }
-//            
-//            supper.setSuperImage(byteObjects);
-//            
-//            superDao.addSuper(supper);
-//        } catch (IOException e) {
-////            log.error("Error occurred", e);
-//            e.printStackTrace();
-//        }        
-//        System.out.println("RECEIVED A FILE!!");
-//    }
     
 }

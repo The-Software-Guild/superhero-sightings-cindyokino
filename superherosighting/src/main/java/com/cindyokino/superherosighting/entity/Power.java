@@ -14,6 +14,8 @@ public class Power {
     @NotBlank(message = "Name must not be empty.")
     @Size(max = 50, message = "Name must be less than 50 characters.")
     private String name;
+    
+    @Size(max = 50, message = "Description must be less than 50 characters.")
     private String description;
 
         

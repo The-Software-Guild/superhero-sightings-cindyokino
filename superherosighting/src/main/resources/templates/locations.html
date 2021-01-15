@@ -73,7 +73,7 @@
                                        id="description" class="form-control" th:value="${location.description}"/>
                                 <div th:if="${#fields.hasErrors('location.description')}">
                                     <p th:each="error : ${#fields.errors('location.description')}" class="alert alert-danger"
-                                      th:text="${error}"> Name errors </p>
+                                      th:text="${error}"> Description errors </p>
                                 </div>
                             </div>
                         </div> 

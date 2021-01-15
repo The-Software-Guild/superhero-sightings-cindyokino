@@ -71,6 +71,10 @@
                             <div class="col-9">
                                 <input type="text" name="description" 
                                        id="description" class="form-control" th:value="${power.description}"/>
+                                <div th:if="${#fields.hasErrors('power.description')}">
+                                    <p th:each="error : ${#fields.errors('power.description')}" class="alert alert-danger"
+                                      th:text="${error}"> Description errors </p>
+                                </div>
                             </div>
                         </div>                        
                         <button type="submit" class="btn btn-primary">Add Power</button>

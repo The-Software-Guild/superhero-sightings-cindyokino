@@ -71,6 +71,10 @@
                             <div class="col-9">
                                 <input type="text" name="description" 
                                        id="description" class="form-control" th:value="${organization.description}"/>
+                                <div th:if="${#fields.hasErrors('organization.description')}">
+                                    <p th:each="error : ${#fields.errors('organization.description')}" class="alert alert-danger"
+                                      th:text="${error}"> Description errors </p>
+                                </div>
                             </div>
                         </div> 
                         <div class="form-group row">
@@ -79,6 +83,10 @@
                             <div class="col-9">
                                 <input type="text" name="address" 
                                        id="address" class="form-control" th:value="${organization.address}"/>
+                                <div th:if="${#fields.hasErrors('organization.address')}">
+                                    <p th:each="error : ${#fields.errors('organization.address')}" class="alert alert-danger"
+                                      th:text="${error}"> Address errors </p>
+                                </div>
                             </div>
                         </div> 
                         <div class="form-group row">
@@ -87,6 +95,10 @@
                             <div class="col-9">
                                 <input type="text" name="contact" 
                                        id="contact" class="form-control" th:value="${organization.contact}"/>
+                                <div th:if="${#fields.hasErrors('organization.contact')}">
+                                    <p th:each="error : ${#fields.errors('organization.contact')}" class="alert alert-danger"
+                                      th:text="${error}"> Contact errors </p>
+                                </div>
                             </div>
                         </div> 
                         <button type="submit" class="btn btn-primary">Add Organization</button>

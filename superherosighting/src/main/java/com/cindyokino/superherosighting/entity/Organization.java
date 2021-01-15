@@ -14,8 +14,14 @@ public class Organization {
     @NotBlank(message = "Name must not be empty.")
     @Size(max = 50, message = "Name must be less than 50 characters.")
     private String name;
+    
+    @Size(max = 50, message = "description must be less than 50 characters.")
     private String description;
+    
+    @Size(max = 50, message = "Address must be less than 50 characters.")
     private String address; 
+    
+    @Size(max = 50, message = "Contact must be less than 50 characters.")
     private String contact;
 
     

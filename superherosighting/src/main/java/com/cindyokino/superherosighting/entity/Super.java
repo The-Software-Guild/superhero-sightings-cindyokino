@@ -16,6 +16,7 @@ public class Super {
     @Size(max = 50, message = "Name must be less than 50 characters.")
     private String name;    
 
+    @Size(max = 50, message = "Description must be less than 50 characters.")
     private String description;
     private List<Location> locations;
     private List<Power> powers;
